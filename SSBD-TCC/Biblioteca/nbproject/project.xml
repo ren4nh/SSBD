@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>br.com.tcc.sources</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>br.com.tcc.conexao</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/postgresql-9.2-1002.jdbc4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/postgresql-9.2-1002.jdbc4.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/Biblioteca.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/Biblioteca.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>

@@ -4,9 +4,16 @@
  */
 package br.com.tcc.conexao;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.Properties;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -32,6 +39,8 @@ import org.openide.util.NbBundle.Messages;
     "HINT_ConexaoTopComponent=Tela de conexão com o banco de dados"
 })
 public final class ConexaoTopComponent extends TopComponent {
+
+    private Connection conexao;
 
     public ConexaoTopComponent() {
         initComponents();
@@ -66,6 +75,7 @@ public final class ConexaoTopComponent extends TopComponent {
         btLimpar = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         txtSenha = new javax.swing.JPasswordField();
+        jlConectado = new javax.swing.JLabel();
 
         org.openide.awt.Mnemonics.setLocalizedText(jConectar, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.jConectar.text")); // NOI18N
 
@@ -96,12 +106,19 @@ public final class ConexaoTopComponent extends TopComponent {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.jLabel6.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(btTeste, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.btTeste.text")); // NOI18N
+        btTeste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTesteActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(btLimpar, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.btLimpar.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(btSalvar, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.btSalvar.text")); // NOI18N
 
         txtSenha.setText(org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.txtSenha.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jlConectado, org.openide.util.NbBundle.getMessage(ConexaoTopComponent.class, "ConexaoTopComponent.jlConectado.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -136,13 +153,14 @@ public final class ConexaoTopComponent extends TopComponent {
                                         .addComponent(txtDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(cmbBanco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtNomeConexao)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                        .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING)))))
+                                    .addComponent(txtSenha)
+                                    .addComponent(txtUsuario))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btTeste)
+                        .addGap(50, 50, 50)
+                        .addComponent(jlConectado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btSalvar)
                         .addGap(10, 10, 10)
@@ -176,16 +194,42 @@ public final class ConexaoTopComponent extends TopComponent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btTeste)
-                    .addComponent(btSalvar)
-                    .addComponent(btLimpar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btTeste)
+                            .addComponent(btSalvar)
+                            .addComponent(btLimpar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlConectado)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jConectar))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTesteActionPerformed
+        try {
+            conexao = Conexao.getPostgres();
+            DatabaseMetaData dmd = conexao.getMetaData();
+            dmd.getTables(null, null, TOOL_TIP_TEXT_KEY, null);
+            if (conexao != null) {
+                jlConectado.setText("Conectado!");
+            } else{
+                jlConectado.setText("Não conectado!");
+            } 
+                
+        } catch (ClassNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (SQLException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (FileNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }//GEN-LAST:event_btTesteActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLimpar;
     private javax.swing.JButton btSalvar;
@@ -199,6 +243,7 @@ public final class ConexaoTopComponent extends TopComponent {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jlConectado;
     private javax.swing.JTextField txtDatabase;
     private javax.swing.JTextField txtNomeConexao;
     private javax.swing.JTextField txtPorta;
@@ -209,7 +254,6 @@ public final class ConexaoTopComponent extends TopComponent {
 
     @Override
     public void componentOpened() {
-        
     }
 
     @Override

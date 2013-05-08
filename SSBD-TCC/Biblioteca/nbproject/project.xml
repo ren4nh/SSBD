@@ -3,10 +3,11 @@
     <type>org.netbeans.modules.apisupport.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
-            <code-name-base>br.com.tcc.sources</code-name-base>
+            <code-name-base>br.com.sources</code-name-base>
             <suite-component/>
             <module-dependencies/>
             <public-packages>
+                <package>br.com.tcc.bean</package>
                 <package>br.com.tcc.conexao</package>
             </public-packages>
             <class-path-extension>

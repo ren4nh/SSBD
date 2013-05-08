@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-OpenIDE-Module: br.com.tcc.sources
-OpenIDE-Module-Localizing-Bundle: br/com/tcc/sources/Bundle.properties
+OpenIDE-Module: br.com.sources
+OpenIDE-Module-Localizing-Bundle: br/com/sources/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0
 

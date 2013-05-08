@@ -7,7 +7,7 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
-                    <code-name-base>br.com.tcc.sources</code-name-base>
+                    <code-name-base>br.com.sources</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>

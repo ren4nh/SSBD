@@ -4,6 +4,7 @@
  */
 package br.com.tcc.conexao;
 
+import br.com.tcc.bean.ListaTabela;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -155,7 +156,7 @@ public final class ConexaoTopComponent extends TopComponent {
                                     .addComponent(txtNomeConexao)
                                     .addComponent(txtSenha)
                                     .addComponent(txtUsuario))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 68, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btTeste)
@@ -212,8 +213,10 @@ public final class ConexaoTopComponent extends TopComponent {
     private void btTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTesteActionPerformed
         try {
             conexao = Conexao.getPostgres();
-            DatabaseMetaData dmd = conexao.getMetaData();
-            dmd.getTables(null, null, TOOL_TIP_TEXT_KEY, null);
+            ListaTabela tabela = new ListaTabela(conexao);
+            for (String string : tabela.listaTabela()) {
+                System.out.println(string);
+            }
             if (conexao != null) {
                 jlConectado.setText("Conectado!");
             } else{

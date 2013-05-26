@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: br.com.tcc.conexao
-OpenIDE-Module-Localizing-Bundle: br/com/tcc/conexao/Bundle.properties
-OpenIDE-Module-Requires: org.openide.windows.WindowManager
-OpenIDE-Module-Specification-Version: 1.0
-

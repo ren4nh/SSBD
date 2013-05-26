@@ -57,7 +57,7 @@ public final class principalTopComponent extends TopComponent implements Explore
         List<String> lista = new ArrayList<String>();
         lista.add("teste");
         lista.add("teste2");
-        em.setRootContext(new AbstractNode(Children.create(new ChildFactory(lista), false)));
+        em.setRootContext(new RootNode(Children.create(new ChildFactory(lista), false)));
         
     }
 
@@ -156,5 +156,10 @@ public final class principalTopComponent extends TopComponent implements Explore
     @Override
     public ExplorerManager getExplorerManager() {
         return em;
+    }
+    
+    public static void novaConexao() {
+        Conexao c = new Conexao();
+        c.setVisible(true);
     }
 }

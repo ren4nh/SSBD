@@ -7,14 +7,6 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
-                    <code-name-base>br.com.tcc.souces</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>1.0</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
                     <code-name-base>org.netbeans.modules.settings</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -73,6 +65,10 @@
                 </dependency>
             </module-dependencies>
             <public-packages/>
+            <class-path-extension>
+                <runtime-relative-path>ext/postgresql-9.2-1002.jdbc4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/postgresql-9.2-1002.jdbc4.jar</binary-origin>
+            </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/Biblioteca.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/Biblioteca.jar</binary-origin>

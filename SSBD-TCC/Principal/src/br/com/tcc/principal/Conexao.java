@@ -141,7 +141,7 @@ public class Conexao extends javax.swing.JFrame {
             String porta = txtPorta.getText();
             String usuario = txtUsuario.getText();
             String senha = txtSenha.getText();
-            conexao = br.com.tcc.conexao.Conexao.getPostgres(ip,porta,senha,usuario);
+            conexao = br.com.tcc.conexao.Conexao.getPostgres();
             if (conexao != null) {
                 System.out.println("Conectado");
             } else {

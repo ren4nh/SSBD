@@ -4,21 +4,16 @@
  */
 package br.com.tcc.principal;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import br.com.tcc.bean.Tabela;
+import br.com.tcc.dao.TabelaDAO;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JMenuItem;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
-import org.openide.nodes.AbstractNode;
+import org.openide.explorer.view.BeanTreeView;
 import org.openide.nodes.Children;
-import org.openide.nodes.Node;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -46,18 +41,18 @@ import org.openide.util.NbBundle.Messages;
 public final class principalTopComponent extends TopComponent implements ExplorerManager.Provider{
 
     
-    private JTree jTree;
-    private DefaultMutableTreeNode pai;
-    private static ExplorerManager em = new ExplorerManager();
+    
+    private transient ExplorerManager em = new ExplorerManager();
     
     public principalTopComponent() {
         initComponents();
         setName(Bundle.CTL_principalTopComponent());
         setToolTipText(Bundle.HINT_principalTopComponent());
-        List<String> lista = new ArrayList<String>();
-        lista.add("teste");
-        lista.add("teste2");
-        em.setRootContext(new RootNode(Children.create(new ChildFactory(lista), false)));
+        List<Tabela> lista = new ArrayList<Tabela>();
+        TabelaDAO tab = new TabelaDAO();
+        lista = tab.listaTabelas();
+        em.setRootContext(new RootNode(Children.create(new ChildFactory(lista), true)));
+        em.getRootContext().setDisplayName("Conexões");
         
     }
 
@@ -69,14 +64,7 @@ public final class principalTopComponent extends TopComponent implements Explore
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        beanTreeView = new org.openide.explorer.view.BeanTreeView();
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
-            }
-        });
+        tabela = new BeanTreeView();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -84,40 +72,20 @@ public final class principalTopComponent extends TopComponent implements Explore
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(beanTreeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(512, Short.MAX_VALUE))
+                .addComponent(tabela, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(752, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(beanTreeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addComponent(tabela, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        // TODO add your handling code here:
-        if (evt.getButton() == MouseEvent.BUTTON3) {
-            System.out.println("botao direito");
-            jPopupMenu1.removeAll();
-            JMenuItem item = new JMenuItem("Nova Conexão");
-            item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Conexao con = new Conexao();
-                    con.setVisible(true);
-                }
-            });
-            jPopupMenu1.add(item);
-            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
-            
-        }
-    }//GEN-LAST:event_formMouseReleased
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.openide.explorer.view.BeanTreeView beanTreeView;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane tabela;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -145,14 +113,6 @@ public final class principalTopComponent extends TopComponent implements Explore
         // TODO read your settings according to their version
     }
     
-    private void criaArvore() {
-        pai = new DefaultMutableTreeNode("pai");
-        pai.add(new DefaultMutableTreeNode("Filho"));
-        jTree = new JTree(pai);
-        jTree.add(jPopupMenu1);
-        repaint();
-    }
-
     @Override
     public ExplorerManager getExplorerManager() {
         return em;

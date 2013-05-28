@@ -1,9 +1,7 @@
 package br.com.tcc.principal;
 
-import java.awt.Image;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
-import org.openide.util.ImageUtilities;
 
 /**
  *
@@ -13,12 +11,10 @@ public class RootNode extends AbstractNode {
 
     public RootNode(Children children) {
         super(children);
+        setIconBaseWithExtension("br/com/tcc/principal/image/conexao.png");
     }
 
-    @Override
-    public Image getIcon(int type) {
-        return ImageUtilities.loadImage("");
-    }
+    
 
     
 }

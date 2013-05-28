@@ -10,10 +10,10 @@ import org.openide.util.Exceptions;
  *
  * @author Renan
  */
-public class Conexao extends javax.swing.JFrame {
+public class TelaConexao extends javax.swing.JFrame {
 
     private Connection conexao;
-    public Conexao() {
+    public TelaConexao() {
         initComponents();
     }
 
@@ -41,27 +41,27 @@ public class Conexao extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.jLabel1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.jLabel1.text")); // NOI18N
 
-        txtIp.setText(org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.txtIp.text")); // NOI18N
+        txtIp.setText(org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.txtIp.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.jLabel2.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.jLabel3.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.jLabel4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.jLabel4.text")); // NOI18N
 
-        txtUsuario.setText(org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.txtUsuario.text")); // NOI18N
+        txtUsuario.setText(org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.txtUsuario.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.jLabel5.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.jLabel5.text")); // NOI18N
 
-        txtSenha.setText(org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.txtSenha.text")); // NOI18N
+        txtSenha.setText(org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.txtSenha.text")); // NOI18N
 
-        txtPorta.setText(org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.txtPorta.text")); // NOI18N
+        txtPorta.setText(org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.txtPorta.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(btCancelar, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.btCancelar.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(btCancelar, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.btCancelar.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(btSalvar, org.openide.util.NbBundle.getMessage(Conexao.class, "Conexao.btSalvar.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(btSalvar, org.openide.util.NbBundle.getMessage(TelaConexao.class, "TelaConexao.btSalvar.text")); // NOI18N
         btSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btSalvarMouseClicked(evt);
@@ -141,7 +141,7 @@ public class Conexao extends javax.swing.JFrame {
             String porta = txtPorta.getText();
             String usuario = txtUsuario.getText();
             String senha = txtSenha.getText();
-            conexao = br.com.tcc.conexao.Conexao.getPostgres();
+            conexao = br.com.tcc.conexao.DBConection.getPostgres();
             if (conexao != null) {
                 System.out.println("Conectado");
             } else {
@@ -177,13 +177,13 @@ public class Conexao extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Conexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Conexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Conexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Conexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConexao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -191,7 +191,7 @@ public class Conexao extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Conexao().setVisible(true);
+                new TelaConexao().setVisible(true);
             }
         });
     }

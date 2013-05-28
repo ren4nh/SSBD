@@ -135,11 +135,6 @@ public final class principalTopComponent extends TopComponent implements Explore
         return em;
     }
     
-    public static void novaConexao() {
-        TelaConexao c = new TelaConexao();
-        c.setVisible(true);
-    }
-    
     public void criarArvore(){
          TabelaDAO tabDAO = new TabelaDAO();
          List<Tabela> listaTab = new ArrayList<Tabela>();

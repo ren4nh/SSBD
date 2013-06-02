@@ -19,8 +19,8 @@ public final class NewConexao implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TelaConexaoTopComponent t = new TelaConexaoTopComponent();
-        t.open();
-        t.requestActive();
+        ConexaoTopComponent c = new ConexaoTopComponent();
+        c.open();
+        c.requestActive();
     }
 }

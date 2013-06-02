@@ -4,9 +4,17 @@
  */
 package br.com.tcc.principal;
 
+import br.com.tcc.bean.Conexao;
+import br.com.tcc.bean.Tabela;
+import br.com.tcc.dao.TabelaDAO;
+import br.com.tcc.principal.node.ConexaoChildren;
+import java.util.ArrayList;
+import java.util.List;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.explorer.ExplorerManager;
+import org.openide.explorer.view.BeanTreeView;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -14,30 +22,33 @@ import org.openide.util.NbBundle.Messages;
  * Top component which displays something.
  */
 @ConvertAsProperties(
-        dtd = "-//br.com.tcc.principal//TelaConexao//EN",
+        dtd = "-//br.com.tcc.principal//principal//EN",
         autostore = false)
 @TopComponent.Description(
-        preferredID = "TelaConexaoTopComponent",
+        preferredID = "principalTopComponent",
         //iconBase="SET/PATH/TO/ICON/HERE", 
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = false)
-@ActionID(category = "Window", id = "br.com.tcc.principal.TelaConexaoTopComponent")
+        persistenceType = TopComponent.PERSISTENCE_NEVER)
+@TopComponent.Registration(mode = "editor", openAtStartup = true)
+@ActionID(category = "Window", id = "br.com.tcc.principal.principalTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
-        displayName = "#CTL_TelaConexaoAction",
-        preferredID = "TelaConexaoTopComponent")
+        displayName = "#CTL_principalAction",
+        preferredID = "principalTopComponent")
 @Messages({
-    "CTL_TelaConexaoAction=TelaConexao",
-    "CTL_TelaConexaoTopComponent=TelaConexao Window",
-    "HINT_TelaConexaoTopComponent=This is a TelaConexao window"
+    "CTL_principalAction=principal",
+    "CTL_principalTopComponent=principal Window",
+    "HINT_principalTopComponent=This is a principal window"
 })
-public final class TelaConexaoTopComponent extends TopComponent {
+public final class PrincipalTopComponent extends TopComponent implements ExplorerManager.Provider{
 
-    public TelaConexaoTopComponent() {
+    
+    
+    private transient ExplorerManager em = new ExplorerManager();
+    
+    public PrincipalTopComponent() {
         initComponents();
-        setName(Bundle.CTL_TelaConexaoTopComponent());
-        setToolTipText(Bundle.HINT_TelaConexaoTopComponent());
-
+        setName(Bundle.CTL_principalTopComponent());
+        setToolTipText(Bundle.HINT_principalTopComponent());
     }
 
     /**
@@ -48,33 +59,26 @@ public final class TelaConexaoTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TelaConexaoTopComponent.class, "TelaConexaoTopComponent.jLabel1.text")); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jLabel1)
-                .addContainerGap(252, Short.MAX_VALUE))
+            .addGap(0, 920, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jLabel1)
-                .addContainerGap(211, Short.MAX_VALUE))
+            .addGap(0, 607, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
+       
+
+
         // TODO add custom code on component opening
     }
 
@@ -94,4 +98,11 @@ public final class TelaConexaoTopComponent extends TopComponent {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
+    
+    @Override
+    public ExplorerManager getExplorerManager() {
+        return em;
+    }
+    
+    
 }

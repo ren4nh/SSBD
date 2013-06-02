@@ -1,5 +1,6 @@
 package br.com.tcc.bean;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,18 @@ import java.util.List;
 public class Conexao {
 
     private String nome;
+    private Connection conexao;
     private List<Tabela> listaTabelas = new ArrayList<>();
 
     public Conexao() {
+    }
+
+    public Connection getConexao() {
+        return conexao;
+    }
+
+    public void setConexao(Connection conexao) {
+        this.conexao = conexao;
     }
 
     public String getNome() {

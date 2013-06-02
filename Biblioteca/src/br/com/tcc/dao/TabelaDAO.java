@@ -2,9 +2,6 @@ package br.com.tcc.dao;
 
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.Tabela;
-import br.com.tcc.conexao.DBConection;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -22,10 +19,13 @@ public class TabelaDAO {
 
     private static Connection conexao;
 
+    public TabelaDAO(Connection conexao) {
+        TabelaDAO.conexao = conexao;
+    }
+
     public List<Tabela> listaTabelas() {
         List<Tabela> listaTabela = new ArrayList<>();
         try {
-            conexao = DBConection.getPostgres();
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getTables(null, "public", null, new String[]{"TABLE"});
             while (rs.next()) {
@@ -33,13 +33,7 @@ public class TabelaDAO {
                 tab.setNome(rs.getString(3));
                 listaTabela.add(tab);
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaTabela;

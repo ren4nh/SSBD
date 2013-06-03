@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.explorer.ExplorerManager;
 import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
@@ -205,9 +206,10 @@ public final class ConexaoTopComponent extends TopComponent {
             if (c.getConexao() != null) {
                 JOptionPane.showMessageDialog(this, "Conectado com sucesso!");
             }
-            AbaConexaoTopComponent a = new AbaConexaoTopComponent();
-            a.lista.add(c);
+            AbaConexaoTopComponent.lista.add(c);
+            AbaConexaoTopComponent.criarArvore();
             limpar();
+            this.close();
         } catch (ClassNotFoundException ex) {
             Exceptions.printStackTrace(ex);
         } catch (SQLException ex) {

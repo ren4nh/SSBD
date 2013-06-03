@@ -42,15 +42,15 @@ import org.openide.util.NbBundle.Messages;
 })
 public final class AbaConexaoTopComponent extends TopComponent implements ExplorerManager.Provider {
 
-    private transient ExplorerManager em = new ExplorerManager();
-    public List<Conexao> lista = new ArrayList<Conexao>();
+    private static ExplorerManager em = new ExplorerManager();
+    public static List<Conexao> lista = new ArrayList<Conexao>();
 
     public AbaConexaoTopComponent() {
         initComponents();
         setName(Bundle.CTL_Teste2TopComponent());
         setToolTipText(Bundle.HINT_Teste2TopComponent());
-        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
-        putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
+//        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
+//        putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
         criarArvore();
         associateLookup(ExplorerUtils.createLookup(em, getActionMap()));
     }
@@ -108,8 +108,7 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
         // TODO read your settings according to their version
     }
 
-    public void criarArvore() {
-        this.repaint();
+    public static void criarArvore() {
         List<Conexao> listaCon = new ArrayList<Conexao>();
         for (Conexao conexao : lista) {
             TabelaDAO tabDAO = new TabelaDAO(conexao.getConexao());

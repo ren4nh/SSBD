@@ -47,6 +47,10 @@ public class TabelaDAO {
             while (rs.next()) {
                 Coluna c = new Coluna();
                 c.setNome(rs.getString(4));
+                c.setTipo(rs.getString(6));
+                c.setTamanho(rs.getInt(7));
+                c.setNulo(rs.getBoolean(18));
+                c.setCasas(rs.getInt(9));
                 listaColuna.add(c);
             }
         } catch (SQLException ex) {

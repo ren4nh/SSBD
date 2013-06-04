@@ -43,13 +43,13 @@ public class TabelaDAO {
         List<Coluna> listaColuna = new ArrayList<>();
         try {
             DatabaseMetaData dmd = conexao.getMetaData();
-            ResultSet rs = dmd.getColumns(null, "public", tabela.getNome(), null);
+            ResultSet rs = dmd.getColumns("ORDINAL_POSITION", "public", tabela.getNome(), null);
             while (rs.next()) {
                 Coluna c = new Coluna();
                 c.setNome(rs.getString(4));
                 c.setTipo(rs.getString(6));
                 c.setTamanho(rs.getInt(7));
-                c.setNulo(rs.getBoolean(18));
+                c.setNulo(rs.getString(18));
                 c.setCasas(rs.getInt(9));
                 listaColuna.add(c);
             }

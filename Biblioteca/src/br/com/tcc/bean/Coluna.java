@@ -9,7 +9,7 @@ public class Coluna {
     private String nome;
     private String tipo;
     private int tamanho;
-    private boolean nulo;
+    private String nulo;
     private int casas;
 
     public Coluna() {
@@ -39,11 +39,11 @@ public class Coluna {
         this.tamanho = tamanho;
     }
 
-    public boolean isNulo() {
+    public String getNulo() {
         return nulo;
     }
 
-    public void setNulo(boolean nulo) {
+    public void setNulo(String nulo) {
         this.nulo = nulo;
     }
 

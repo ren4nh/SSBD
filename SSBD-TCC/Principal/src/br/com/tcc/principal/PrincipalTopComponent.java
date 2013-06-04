@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.tcc.principal;
 
 import br.com.tcc.bean.Coluna;
@@ -12,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.explorer.ExplorerManager;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -78,7 +73,15 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
             new String [] {
                 "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -141,7 +144,7 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
                 dtm.getDataVector().removeAllElements();
                 dtm.fireTableDataChanged();
                 for (Coluna coluna : tab.getListaColuna()) {
-                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.isNulo()});
+                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo()});
                 }
             }
         } else {

@@ -84,7 +84,6 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
 
     @Override
     public void componentOpened() {
-        // TODO add custom code on component opening
     }
 
     @Override
@@ -126,8 +125,7 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
     public ExplorerManager getExplorerManager() {
         return em;
     }
-    
+
     public void nodoSelecionado() {
-    
     }
 }

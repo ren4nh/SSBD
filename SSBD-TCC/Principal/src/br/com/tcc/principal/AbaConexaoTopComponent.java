@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.tcc.principal;
 
 import br.com.tcc.bean.Conexao;
@@ -26,19 +22,19 @@ import org.openide.util.NbBundle.Messages;
         dtd = "-//br.com.tcc.principal//Teste2//EN",
         autostore = false)
 @TopComponent.Description(
-        preferredID = "Teste2TopComponent",
+        preferredID = "AbaConexaoTopComponent",
         //iconBase="SET/PATH/TO/ICON/HERE", 
         persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "explorer", openAtStartup = true)
-@ActionID(category = "Window", id = "br.com.tcc.principal.Teste2TopComponent")
+@ActionID(category = "Window", id = "br.com.tcc.principal.AbaConexaoTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
-        displayName = "#CTL_Teste2Action",
-        preferredID = "Teste2TopComponent")
+        displayName = "#CTL_AbaConexaoAction",
+        preferredID = "AbaConexaoTopComponent")
 @Messages({
-    "CTL_Teste2Action=Teste2",
-    "CTL_Teste2TopComponent=Conexão",
-    "HINT_Teste2TopComponent=This is a Conexão window"
+    "CTL_AbaConexaoAction=Teste2",
+    "CTL_AbaConexaoTopComponent=Conexão",
+    "HINT_AbaConexaoTopComponent=This is a Conexão window"
 })
 public final class AbaConexaoTopComponent extends TopComponent implements ExplorerManager.Provider {
 
@@ -47,8 +43,8 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
 
     public AbaConexaoTopComponent() {
         initComponents();
-        setName(Bundle.CTL_Teste2TopComponent());
-        setToolTipText(Bundle.HINT_Teste2TopComponent());
+        setName(Bundle.CTL_AbaConexaoTopComponent());
+        setToolTipText(Bundle.HINT_AbaConexaoTopComponent());
 //        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
 //        putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
         criarArvore();
@@ -129,5 +125,9 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
     @Override
     public ExplorerManager getExplorerManager() {
         return em;
+    }
+    
+    public void nodoSelecionado() {
+    
     }
 }

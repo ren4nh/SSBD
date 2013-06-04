@@ -4,19 +4,24 @@
  */
 package br.com.tcc.principal;
 
-import br.com.tcc.bean.Conexao;
+import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.Tabela;
-import br.com.tcc.dao.TabelaDAO;
-import br.com.tcc.principal.node.ConexaoChildren;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
-import org.openide.explorer.view.BeanTreeView;
+import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.RequestProcessor;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
+import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays something.
@@ -39,19 +44,22 @@ import org.openide.util.NbBundle.Messages;
     "CTL_principalTopComponent=principal Window",
     "HINT_principalTopComponent=This is a principal window"
 })
-public final class PrincipalTopComponent extends TopComponent implements ExplorerManager.Provider{
+public final class PrincipalTopComponent extends TopComponent implements LookupListener {
 
-    
-    
-    private transient ExplorerManager em = new ExplorerManager();
-    
+    private Lookup.Result result = null;
+    private final InstanceContent content;
+
     public PrincipalTopComponent() {
         initComponents();
         setName(Bundle.CTL_principalTopComponent());
         setToolTipText(Bundle.HINT_principalTopComponent());
+        //Create a new instance of our dynamic object:
+        content = new InstanceContent();
+
+        //Add the dynamic object to the TopComponent Lookup:
+        associateLookup(new AbstractLookup(content));
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,32 +68,55 @@ public final class PrincipalTopComponent extends TopComponent implements Explore
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabela = new javax.swing.JTable();
+
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null"
+            }
+        ));
+        jScrollPane1.setViewportView(tabela);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 920, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void componentOpened() {
-       
-
-
-        // TODO add custom code on component opening
+        RequestProcessor.getDefault().post(new Runnable() {
+            @Override
+            public void run() {
+                readTable();
+            }
+        });
     }
 
     @Override
     public void componentClosed() {
-        // TODO add custom code on component closing
+        result.removeLookupListener(this);
+        result = null;
     }
 
     void writeProperties(java.util.Properties p) {
@@ -99,11 +130,38 @@ public final class PrincipalTopComponent extends TopComponent implements Explore
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-    
+
     @Override
-    public ExplorerManager getExplorerManager() {
-        return em;
+    public void resultChanged(LookupEvent le) {
+        Lookup.Result r = (Lookup.Result) le.getSource();
+        Collection<Tabela> coll = r.allInstances();
+        if (!coll.isEmpty()) {
+            for (Tabela tab : coll) {
+                DefaultTableModel dtm = (DefaultTableModel) tabela.getModel();
+                dtm.getDataVector().removeAllElements();
+                dtm.fireTableDataChanged();
+                for (Coluna coluna : tab.getListaColuna()) {
+                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.isNulo()});
+                }
+            }
+        } else {
+            System.out.println("nao");
+        }
     }
-    
-    
+
+    private void readTable() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                TopComponent tc = WindowManager.getDefault().findTopComponent("AbaConexaoTopComponent");
+                if (tc == null) {
+                    // XXX: message box?
+                    return;
+                }
+                result = tc.getLookup().lookupResult(Tabela.class);
+                result.addLookupListener(PrincipalTopComponent.this);
+                resultChanged(new LookupEvent(result));
+            }
+        });
+    }
 }

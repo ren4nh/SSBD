@@ -71,11 +71,11 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
 
             },
             new String [] {
-                "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null"
+                "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null", "Chave Primária", "Chave Estrangeira"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -144,7 +144,7 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
                 dtm.getDataVector().removeAllElements();
                 dtm.fireTableDataChanged();
                 for (Coluna coluna : tab.getListaColuna()) {
-                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo()});
+                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo(), coluna.isPk(), coluna.isFk()});
                 }
             }
         } else {

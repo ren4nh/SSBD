@@ -22,9 +22,7 @@ public class ColunaChildren extends Index.ArrayChildren {
     protected java.util.List<Node> initCollection() {
        ArrayList childrenNodes = new ArrayList();
         for (Coluna coluna : tabela.getListaColuna()) {
-            Coluna c = new Coluna();
-            c.setNome(coluna.getNome());
-            childrenNodes.add(new ColunaNode(c));
+            childrenNodes.add(new ColunaNode(coluna));
         }
         return childrenNodes;
     }

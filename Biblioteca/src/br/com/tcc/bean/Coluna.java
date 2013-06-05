@@ -11,6 +11,8 @@ public class Coluna {
     private int tamanho;
     private String nulo;
     private int casas;
+    private boolean pk;
+    private boolean fk;
 
     public Coluna() {
     }
@@ -53,5 +55,21 @@ public class Coluna {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isPk() {
+        return pk;
+    }
+
+    public void setPk(boolean pk) {
+        this.pk = pk;
+    }
+
+    public boolean isFk() {
+        return fk;
+    }
+
+    public void setFk(boolean fk) {
+        this.fk = fk;
     }
 }

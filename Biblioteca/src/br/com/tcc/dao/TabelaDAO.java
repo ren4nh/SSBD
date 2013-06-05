@@ -41,9 +41,11 @@ public class TabelaDAO {
 
     public List<Coluna> listaColunas(Tabela tabela) {
         List<Coluna> listaColuna = new ArrayList<>();
+        List<String> listaFk = checkFk(tabela);
         try {
+            String pk = checkPk(tabela);
             DatabaseMetaData dmd = conexao.getMetaData();
-            ResultSet rs = dmd.getColumns("ORDINAL_POSITION", "public", tabela.getNome(), null);
+            ResultSet rs = dmd.getColumns(conexao.getCatalog(), "public", tabela.getNome(), null);
             while (rs.next()) {
                 Coluna c = new Coluna();
                 c.setNome(rs.getString(4));
@@ -51,11 +53,51 @@ public class TabelaDAO {
                 c.setTamanho(rs.getInt(7));
                 c.setNulo(rs.getString(18));
                 c.setCasas(rs.getInt(9));
+                c.setFk(false);
+                if (c.getNome().equals(pk)) {
+                    c.setPk(true);
+                } else {
+                    c.setPk(false);
+                }
+                for (String string : listaFk) {
+                    if (c.getNome().equals(string)) {
+                        c.setFk(true);
+                    }
+                }
                 listaColuna.add(c);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaColuna;
+    }
+
+    private String checkPk(Tabela t) {
+        String nomePk = "";
+        try {
+            DatabaseMetaData dmd = conexao.getMetaData();
+            ResultSet rs = dmd.getPrimaryKeys(null, null, t.getNome());
+            while (rs.next()) {
+                nomePk = rs.getString(4);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nomePk;
+
+    }
+
+    private List<String> checkFk(Tabela t) {
+        List<String> lista = new ArrayList<>();
+        try {
+            DatabaseMetaData dmd = conexao.getMetaData();
+            ResultSet rs = dmd.getImportedKeys(null, null, t.getNome());
+            while (rs.next()) {
+                lista.add(rs.getString(8));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 }

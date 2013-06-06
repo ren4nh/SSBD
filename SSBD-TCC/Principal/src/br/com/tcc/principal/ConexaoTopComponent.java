@@ -198,16 +198,16 @@ public final class ConexaoTopComponent extends TopComponent {
             c.setNome(txtNome.getText());
             c.setConexao(DBConection.getPostgres(sv, porta, base, user, senha));
             if (c.getConexao() != null) {
-                JOptionPane.showMessageDialog(this, "Conectado com sucesso!");
+                JOptionPane.showMessageDialog(this, "Conectado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                AbaConexaoTopComponent.lista.add(c);
+                AbaConexaoTopComponent.criarArvore();
+                limpar();
+                this.close();
             }
-            AbaConexaoTopComponent.lista.add(c);
-            AbaConexaoTopComponent.criarArvore();
-            limpar();
-            this.close();
         } catch (ClassNotFoundException ex) {
             Exceptions.printStackTrace(ex);
         } catch (SQLException ex) {
-            Exceptions.printStackTrace(ex);
+            JOptionPane.showMessageDialog(this, "Conexão recusada! \nVerifique os dados", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -215,9 +215,8 @@ public final class ConexaoTopComponent extends TopComponent {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
-       limpar();
+        limpar();
     }//GEN-LAST:event_btLimparActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLimpar;
     private javax.swing.JButton btSalvar;
@@ -258,7 +257,7 @@ public final class ConexaoTopComponent extends TopComponent {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-    
+
     private void limpar() {
         txtBase.setText("");
         txtNome.setText("");
@@ -267,8 +266,8 @@ public final class ConexaoTopComponent extends TopComponent {
         txtServer.setText("");
         txtUsuario.setText("");
     }
-    
-    private void loadCmbBanco(){
+
+    private void loadCmbBanco() {
         DefaultComboBoxModel dcbm = (DefaultComboBoxModel) cmbBanco.getModel();
         dcbm.addElement("Postgres SQL");
         dcbm.addElement("SQL Server");

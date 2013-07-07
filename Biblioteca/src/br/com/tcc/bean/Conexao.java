@@ -40,4 +40,9 @@ public class Conexao {
     public void setListaTabelas(List<Tabela> listaTabelas) {
         this.listaTabelas = listaTabelas;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

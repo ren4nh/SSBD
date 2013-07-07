@@ -4,6 +4,7 @@ import br.com.tcc.bean.Conexao;
 import br.com.tcc.principal.AbaConexaoTopComponent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -53,13 +54,23 @@ public final class ComparaTopComponent extends TopComponent {
         jLabel2 = new javax.swing.JLabel();
         cmbBaseAtual = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jButton1 = new javax.swing.JButton();
+        txtArea = new javax.swing.JTextPane();
+        btComparar = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jLabel1.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jLabel2.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jButton1.text")); // NOI18N
+        txtArea.setEditable(false);
+        txtArea.setContentType("text/html"); // NOI18N
+        jScrollPane1.setViewportView(txtArea);
+
+        org.openide.awt.Mnemonics.setLocalizedText(btComparar, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.btComparar.text")); // NOI18N
+        btComparar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCompararActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -75,13 +86,13 @@ public final class ComparaTopComponent extends TopComponent {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmbBaseAntiga, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbBaseAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)))))
+                                .addComponent(btComparar)))))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -95,19 +106,30 @@ public final class ComparaTopComponent extends TopComponent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbBaseAntiga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbBaseAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btComparar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addGap(52, 52, 52))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCompararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCompararActionPerformed
+        if (valida()) {
+            ComparaTabela comparaTabela = new ComparaTabela();
+            Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
+            Conexao conexaoAtual = (Conexao) cmbBaseAtual.getSelectedItem();
+            String resultado = comparaTabela.comparaNome(conexaoAntiga, conexaoAtual);
+            txtArea.setText(resultado);
+        }
+    }//GEN-LAST:event_btCompararActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btComparar;
     private javax.swing.JComboBox cmbBaseAntiga;
     private javax.swing.JComboBox cmbBaseAtual;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane txtArea;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -137,9 +159,22 @@ public final class ComparaTopComponent extends TopComponent {
         DefaultComboBoxModel dbm = (DefaultComboBoxModel) cmbBaseAntiga.getModel();
         DefaultComboBoxModel dcm = (DefaultComboBoxModel) cmbBaseAtual.getModel();
         for (Conexao conexao : lista) {
-            dbm.addElement(conexao.getNome());
-            dcm.addElement(conexao.getNome());
+            dbm.addElement(conexao);
+            dcm.addElement(conexao);
         }
+
+    }
+
+    private boolean valida() {
+        if (cmbBaseAntiga.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Deve ser selecionada a base antiga", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if (cmbBaseAtual.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Deve ser selecionada a base atual", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        return true;
 
     }
 }

@@ -66,8 +66,6 @@
             </module-dependencies>
             <public-packages>
                 <package>br.com.tcc.bean</package>
-                <package>br.com.tcc.conexao</package>
-                <package>br.com.tcc.dao</package>
                 <package>br.com.tcc.principal</package>
                 <package>br.com.tcc.principal.node</package>
             </public-packages>

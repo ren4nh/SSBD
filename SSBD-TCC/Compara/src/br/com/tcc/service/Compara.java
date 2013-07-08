@@ -1,4 +1,4 @@
-package br.com.tcc.view;
+package br.com.tcc.service;
 
 import br.com.tcc.bean.Conexao;
 import java.util.List;

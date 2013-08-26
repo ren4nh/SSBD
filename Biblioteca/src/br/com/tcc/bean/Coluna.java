@@ -1,5 +1,7 @@
 package br.com.tcc.bean;
 
+import java.util.Objects;
+
 /**
  *
  * @author renan
@@ -71,5 +73,27 @@ public class Coluna {
 
     public void setFk(boolean fk) {
         this.fk = fk;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coluna other = (Coluna) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
     }
 }

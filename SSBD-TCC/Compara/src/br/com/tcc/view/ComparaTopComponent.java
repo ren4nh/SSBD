@@ -3,6 +3,7 @@ package br.com.tcc.view;
 import br.com.tcc.service.ComparaTabela;
 import br.com.tcc.bean.Conexao;
 import br.com.tcc.principal.AbaConexaoTopComponent;
+import br.com.tcc.service.ComparaColuna;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -119,7 +120,9 @@ public final class ComparaTopComponent extends TopComponent {
             ComparaTabela comparaTabela = new ComparaTabela();
             Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
             Conexao conexaoAtual = (Conexao) cmbBaseAtual.getSelectedItem();
+            ComparaColuna comparaColuna = new ComparaColuna(conexaoAntiga, conexaoAtual);
             String resultado = comparaTabela.comparaNome(conexaoAntiga, conexaoAtual);
+            resultado += comparaColuna.comparaNome(conexaoAntiga, conexaoAtual);
             txtArea.setText(resultado);
         }
     }//GEN-LAST:event_btCompararActionPerformed

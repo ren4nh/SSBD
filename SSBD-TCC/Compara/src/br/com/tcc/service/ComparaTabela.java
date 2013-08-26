@@ -25,7 +25,7 @@ public class ComparaTabela implements Compara {
                resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />"); 
             }
         }
-        resultado.append("</html>");
+//        resultado.append("</html>");
         return resultado.toString();
     }
 }

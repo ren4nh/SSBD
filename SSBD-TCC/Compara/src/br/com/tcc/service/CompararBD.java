@@ -17,7 +17,7 @@ import org.openide.util.NbBundle.Messages;
         id = "br.com.tcc.view.CompararBD")
 @ActionRegistration(
         displayName = "#CTL_CompararBD")
-@ActionReference(path = "Menu/File", position = 1200)
+@ActionReference(path = "Menu/Comparar", position = 1200)
 @Messages("CTL_CompararBD=Comparar BD...")
 public final class CompararBD implements ActionListener {
 

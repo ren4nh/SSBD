@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
         preferredID = "ConexaoTopComponent")
 @Messages({
     "CTL_ConexaoAction=Conexao",
-    "CTL_ConexaoTopComponent=Conexao Window",
+    "CTL_ConexaoTopComponent=Tela de Conexão",
     "HINT_ConexaoTopComponent=This is a Conexao window"
 })
 public final class ConexaoTopComponent extends TopComponent {

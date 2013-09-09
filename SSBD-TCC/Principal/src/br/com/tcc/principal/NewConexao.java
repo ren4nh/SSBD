@@ -13,7 +13,7 @@ import org.openide.util.NbBundle.Messages;
 @ActionRegistration(
         iconBase = "br/com/tcc/principal/image/database-add-icon.png",
         displayName = "#CTL_newConexao")
-@ActionReference(path = "Menu/File", position = 1300)
+@ActionReference(path = "Menu/Conexao", position = 1300)
 @Messages("CTL_newConexao=Nova Conexão")
 public final class NewConexao implements ActionListener {
 

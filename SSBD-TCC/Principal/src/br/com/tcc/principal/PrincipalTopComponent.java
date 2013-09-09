@@ -36,7 +36,7 @@ import org.openide.windows.WindowManager;
         preferredID = "principalTopComponent")
 @Messages({
     "CTL_principalAction=principal",
-    "CTL_principalTopComponent=principal Window",
+    "CTL_principalTopComponent=Página Inicial",
     "HINT_principalTopComponent=This is a principal window"
 })
 public final class PrincipalTopComponent extends TopComponent implements LookupListener {

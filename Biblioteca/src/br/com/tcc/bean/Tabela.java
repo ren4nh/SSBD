@@ -1,5 +1,6 @@
 package br.com.tcc.bean;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 public class Tabela {
 
     private String nome;
+    @XStreamAlias("colunas")
     private List<Coluna> listaColuna = new ArrayList<>();
 
     public Tabela() {

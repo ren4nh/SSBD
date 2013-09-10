@@ -1,7 +1,12 @@
 package br.com.tcc.service;
 
 import br.com.tcc.bean.Conexao;
+import br.com.tcc.bean.Create;
+import br.com.tcc.bean.Delete;
 import br.com.tcc.bean.Tabela;
+import br.com.tcc.xml.GerarXml;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,6 +16,10 @@ public class ComparaTabela implements Compara {
 
     @Override
     public String comparaNome(Conexao baseAntiga, Conexao baseAtual) {
+        Create create = new Create();
+        Delete delete = new Delete();
+        List<Tabela> listaCreate = new ArrayList<Tabela>();
+        List<Tabela> listaDelete = new ArrayList<Tabela>();
         StringBuilder resultado = new StringBuilder();
         resultado.append("<html>");
         for (Tabela tabelaAtual : baseAtual.getListaTabelas()) {
@@ -18,14 +27,21 @@ public class ComparaTabela implements Compara {
                 resultado.append("<font color=BLACK>As tabelas ").append(baseAtual.getNome()).append(".").append(tabelaAtual.getNome()).append(" e ").append(baseAntiga.getNome()).append(".").append(baseAntiga.getListaTabelas().get(baseAntiga.getListaTabelas().indexOf(tabelaAtual)).getNome()).append(" possuem o mesmo nome.</font><br />");
             } else {
                 resultado.append("<font color=GREEN>Deverá ser criada a tabela ").append(tabelaAtual.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
+                listaCreate.add(tabelaAtual);
             }
         }
         for (Tabela tabelaAntiga : baseAntiga.getListaTabelas()) {
             if (!baseAtual.getListaTabelas().contains(tabelaAntiga)) {
-               resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />"); 
+                resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
+                tabelaAntiga.setListaColuna(null);
+                listaDelete.add(tabelaAntiga);
             }
         }
-//        resultado.append("</html>");
+        resultado.append("</html>");
+        create.setListaTabela(listaCreate);
+        delete.setListaTabelas(listaDelete);
+        GerarXml.gerarCreate(create);
+        GerarXml.gerarDelete(delete);
         return resultado.toString();
     }
 }

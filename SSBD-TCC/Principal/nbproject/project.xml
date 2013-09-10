@@ -66,12 +66,18 @@
             </module-dependencies>
             <public-packages>
                 <package>br.com.tcc.bean</package>
+                <package>br.com.tcc.conexao</package>
                 <package>br.com.tcc.principal</package>
                 <package>br.com.tcc.principal.node</package>
+                <package>br.com.tcc.xml</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/postgresql-9.2-1002.jdbc4.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/postgresql-9.2-1002.jdbc4.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/xstream-1.4.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/xstream-1.4.4.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/Biblioteca.jar</runtime-relative-path>

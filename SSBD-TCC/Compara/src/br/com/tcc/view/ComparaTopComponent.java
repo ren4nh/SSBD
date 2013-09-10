@@ -122,7 +122,7 @@ public final class ComparaTopComponent extends TopComponent {
             Conexao conexaoAtual = (Conexao) cmbBaseAtual.getSelectedItem();
             ComparaColuna comparaColuna = new ComparaColuna(conexaoAntiga, conexaoAtual);
             String resultado = comparaTabela.comparaNome(conexaoAntiga, conexaoAtual);
-            resultado += comparaColuna.comparaNome(conexaoAntiga, conexaoAtual);
+//            resultado += comparaColuna.comparaNome(conexaoAntiga, conexaoAtual);
             txtArea.setText(resultado);
         }
     }//GEN-LAST:event_btCompararActionPerformed

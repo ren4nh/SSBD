@@ -217,6 +217,7 @@ public final class ConexaoTopComponent extends TopComponent {
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         limpar();
     }//GEN-LAST:event_btLimparActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLimpar;
     private javax.swing.JButton btSalvar;

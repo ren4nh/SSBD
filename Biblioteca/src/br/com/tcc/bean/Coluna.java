@@ -9,22 +9,15 @@ import java.util.Objects;
 public class Coluna {
 
     private String nome;
+    private String acao;
     private String tipo;
-    private int tamanho;
+    private String tamanho;
     private String nulo;
-    private int casas;
+    private String casas;
     private boolean pk;
     private boolean fk;
 
     public Coluna() {
-    }
-
-    public int getCasas() {
-        return casas;
-    }
-
-    public void setCasas(int casas) {
-        this.casas = casas;
     }
 
     public String getTipo() {
@@ -35,12 +28,28 @@ public class Coluna {
         this.tipo = tipo;
     }
 
-    public int getTamanho() {
+    public String getAcao() {
+        return acao;
+    }
+
+    public void setAcao(String acao) {
+        this.acao = acao;
+    }
+
+    public String getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public String getCasas() {
+        return casas;
+    }
+
+    public void setCasas(String casas) {
+        this.casas = casas;
     }
 
     public String getNulo() {

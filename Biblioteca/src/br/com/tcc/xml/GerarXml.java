@@ -1,5 +1,6 @@
 package br.com.tcc.xml;
 
+import br.com.tcc.bean.Alter;
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.Create;
 import br.com.tcc.bean.Delete;
@@ -54,6 +55,26 @@ public class GerarXml {
             xstream.toXML(delete, writer);
             xml = outputStream.toString("UTF-8");
             salvar(xml, "delete.xml");
+        } catch (IOException ex) {
+            Logger.getLogger(GerarXml.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return xml;
+    }
+    
+     public static String gerarAlter(Alter alter) {
+        String xml = "";
+        try {
+            XStream xstream = new XStream(new DomDriver("UTF-8"));
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            Writer writer = new OutputStreamWriter(outputStream, "UTF-8");
+            xstream.alias("alter", Alter.class);
+            xstream.alias("tabela", Tabela.class);
+            xstream.alias("coluna", Coluna.class);
+            xstream.autodetectAnnotations(true);
+            writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n");
+            xstream.toXML(alter, writer);
+            xml = outputStream.toString("UTF-8");
+            salvar(xml, "alter.xml");
         } catch (IOException ex) {
             Logger.getLogger(GerarXml.class.getName()).log(Level.SEVERE, null, ex);
         }

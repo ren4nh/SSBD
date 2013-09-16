@@ -50,9 +50,9 @@ public class TabelaDAO {
                 Coluna c = new Coluna();
                 c.setNome(rs.getString(4));
                 c.setTipo(rs.getString(6));
-                c.setTamanho(rs.getInt(7));
+                c.setTamanho(rs.getString(7));
                 c.setNulo(rs.getString(18));
-                c.setCasas(rs.getInt(9));
+                c.setCasas(rs.getString(9));
                 c.setFk(false);
                 if (c.getNome().equals(pk)) {
                     c.setPk(true);

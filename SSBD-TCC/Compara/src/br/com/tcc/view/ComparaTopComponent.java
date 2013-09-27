@@ -2,14 +2,20 @@ package br.com.tcc.view;
 
 import br.com.tcc.service.ComparaTabela;
 import br.com.tcc.bean.Conexao;
+import br.com.tcc.bean.Delete;
+import br.com.tcc.bean.Tabela;
+import br.com.tcc.dao.DeleteDAO;
 import br.com.tcc.principal.AbaConexaoTopComponent;
 import br.com.tcc.service.ComparaColuna;
+import br.com.tcc.xml.LerXml;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -58,6 +64,7 @@ public final class ComparaTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextPane();
         btComparar = new javax.swing.JButton();
+        btSincronizar = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jLabel1.text")); // NOI18N
 
@@ -71,6 +78,13 @@ public final class ComparaTopComponent extends TopComponent {
         btComparar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCompararActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(btSincronizar, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.btSincronizar.text")); // NOI18N
+        btSincronizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSincronizarActionPerformed(evt);
             }
         });
 
@@ -94,7 +108,10 @@ public final class ComparaTopComponent extends TopComponent {
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbBaseAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btComparar)))))
+                                .addComponent(btComparar))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btSincronizar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -111,7 +128,9 @@ public final class ComparaTopComponent extends TopComponent {
                     .addComponent(btComparar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                .addGap(52, 52, 52))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSincronizar)
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -126,8 +145,24 @@ public final class ComparaTopComponent extends TopComponent {
             txtArea.setText(resultado);
         }
     }//GEN-LAST:event_btCompararActionPerformed
+
+    private void btSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSincronizarActionPerformed
+        Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
+        DeleteDAO del = new DeleteDAO(conexaoAntiga.getConexao());
+        LerXml l = new LerXml();
+        Delete d = l.lerDelete();
+        for (Tabela tabela : d.getListaTabelas()) {
+            try {
+                del.deletar(tabela);
+            } catch (SQLException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+    }//GEN-LAST:event_btSincronizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btComparar;
+    private javax.swing.JButton btSincronizar;
     private javax.swing.JComboBox cmbBaseAntiga;
     private javax.swing.JComboBox cmbBaseAtual;
     private javax.swing.JLabel jLabel1;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<create>
+<tabelas>
+    <tabela>
+      <nome>tabelanova</nome>
+      <colunas>
+        <coluna>
+          <nome>id</nome>
+          <tipo>numeric</tipo>
+          <tamanho>6</tamanho>
+          <nulo>YES</nulo>
+          <casas>0</casas>
+          <pk>false</pk>
+          <fk>false</fk>
+        </coluna>
+        <coluna>
+          <nome>nome</nome>
+          <tipo>varchar</tipo>
+          <tamanho>300</tamanho>
+          <nulo>YES</nulo>
+          <casas>0</casas>
+          <pk>false</pk>
+          <fk>false</fk>
+        </coluna>
+      </colunas>
+    </tabela>
+</tabelas>
+</create>

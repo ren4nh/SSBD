@@ -28,28 +28,30 @@ public class ComparaTabela {
         for (Tabela tabelaAtual : baseAtual.getListaTabelas()) {
             if (baseAntiga.getListaTabelas().contains(tabelaAtual)) {
                 resultado.append("<font color=BLACK>As tabelas ").append(baseAtual.getNome()).append(".").append(tabelaAtual.getNome()).append(" e ").append(baseAntiga.getNome()).append(".").append(baseAntiga.getListaTabelas().get(baseAntiga.getListaTabelas().indexOf(tabelaAtual)).getNome()).append(" possuem o mesmo nome.</font><br />");
-                ComparaColuna comparaColuna = new ComparaColuna(baseAntiga.getListaTabelas().get(baseAntiga.getListaTabelas().indexOf(tabelaAtual)), tabelaAtual , baseAntiga.getNome(), baseAtual.getNome());
+                ComparaColuna comparaColuna = new ComparaColuna(baseAntiga.getListaTabelas().get(baseAntiga.getListaTabelas().indexOf(tabelaAtual)), tabelaAtual, baseAntiga.getNome(), baseAtual.getNome());
                 aux = comparaColuna.compara();
                 resultado.append(aux.getResultado());
-                alter.getListaTabela().add(aux.getTabela());
-            } else {
-                resultado.append("<font color=GREEN>Deverá ser criada a tabela ").append(tabelaAtual.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
-                listaCreate.add(tabelaAtual);
+                if (!aux.getTabela().getListaColuna().isEmpty()) {
+                    alter.getListaTabela().add(aux.getTabela());
+                }
+                } else {
+                    resultado.append("<font color=GREEN>Deverá ser criada a tabela ").append(tabelaAtual.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
+                    listaCreate.add(tabelaAtual);
+                }
             }
-        }
-        for (Tabela tabelaAntiga : baseAntiga.getListaTabelas()) {
-            if (!baseAtual.getListaTabelas().contains(tabelaAntiga)) {
-                resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
-                tabelaAntiga.setListaColuna(null);
-                listaDelete.add(tabelaAntiga);
+            for (Tabela tabelaAntiga : baseAntiga.getListaTabelas()) {
+                if (!baseAtual.getListaTabelas().contains(tabelaAntiga)) {
+                    resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
+                    tabelaAntiga.setListaColuna(null);
+                    listaDelete.add(tabelaAntiga);
+                }
             }
+            resultado.append("</html>");
+            create.setListaTabela(listaCreate);
+            delete.setListaTabelas(listaDelete);
+            GerarXml.gerarCreate(create);
+            GerarXml.gerarDelete(delete);
+            GerarXml.gerarAlter(alter);
+            return resultado.toString();
         }
-        resultado.append("</html>");
-        create.setListaTabela(listaCreate);
-        delete.setListaTabelas(listaDelete);
-        GerarXml.gerarCreate(create);
-        GerarXml.gerarDelete(delete);
-        GerarXml.gerarAlter(alter);
-        return resultado.toString();
     }
-}

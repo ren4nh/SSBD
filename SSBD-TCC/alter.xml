@@ -2,20 +2,14 @@
 <alter>
   <tabelas>
     <tabela>
+      <nome>tabelanova</nome>
+      <colunas/>
+      <fks/>
+    </tabela>
+    <tabela>
       <nome>teste</nome>
-      <colunas>
-        <coluna>
-          <nome>testeid</nome>
-          <acao>alterColumn</acao>
-          <fk>
-            <nome>teste</nome>
-            <tabelaReferencia>tabelanova</tabelaReferencia>
-            <colunaReferencia>id</colunaReferencia>
-            <updateRule>NOACTION</updateRule>
-            <deleteRule>NOACTION</deleteRule>
-          </fk>
-        </coluna>
-      </colunas>
+      <colunas/>
+      <fks/>
     </tabela>
   </tabelas>
 </alter>

@@ -108,11 +108,9 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
         for (Conexao conexao : lista) {
             TabelaDAO tabDAO = new TabelaDAO(conexao.getConexao());
             List<Tabela> listaTab = new ArrayList<Tabela>();
-            for (Tabela tabela1 : tabDAO.listaTabelas()) {
-                Tabela t = new Tabela();
-                t.setNome(tabela1.getNome());
-                t.setListaColuna(tabDAO.listaColunas(tabela1));
-                listaTab.add(t);
+            for (Tabela tabela1 : tabDAO.listaTabelas()) {               
+                tabela1.setListaColuna(tabDAO.listaColunas(tabela1));
+                listaTab.add(tabela1);
             }
             conexao.setListaTabelas(listaTab);
             listaCon.add(conexao);

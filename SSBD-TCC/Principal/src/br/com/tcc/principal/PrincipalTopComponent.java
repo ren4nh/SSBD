@@ -144,7 +144,7 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
                 dtm.getDataVector().removeAllElements();
                 dtm.fireTableDataChanged();
                 for (Coluna coluna : tab.getListaColuna()) {
-                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo(), coluna.getPk()});
+                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo(), coluna.getNome().equalsIgnoreCase(tab.getPk().getColuna()) ? "Sim" : "Não"});
                 }
             }
         } else {

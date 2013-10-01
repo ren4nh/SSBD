@@ -17,10 +17,6 @@ public class ColunaNode extends AbstractNode {
         super(Children.LEAF, Lookups.fixed(new Object[]{key}));
         this.coluna = key;
         setDisplayName(key.getNome());
-        if (key.getPk().equalsIgnoreCase("SIM")) {
-            setIconBaseWithExtension("br/com/tcc/principal/image/pkey.gif");
-        } else {
-            setIconBaseWithExtension("br/com/tcc/principal/image/coluna.png");
-        }
+        setIconBaseWithExtension("br/com/tcc/principal/image/coluna.png");
     }
 }

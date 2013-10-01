@@ -18,7 +18,6 @@ public class ComparaColuna {
     StringBuilder resultado = new StringBuilder();
     private boolean addColumn = false;
     private boolean alterColumn = false;
-    private boolean iguais = false;
     Coluna coluna = new Coluna();
     Auxiliar aux = new Auxiliar();
     ForeignKey fk = new ForeignKey();
@@ -39,8 +38,6 @@ public class ComparaColuna {
             comparaNulo(colunaAtual);
             comparaTamanho(colunaAtual);
             comparaNome(colunaAtual);
-            comparaPk(colunaAtual);
-            comparaFk(colunaAtual);
             if (addColumn) {
                 coluna.setAcao("addColumn");
                 tabelaAux.getListaColuna().add(coluna);
@@ -129,92 +126,6 @@ public class ComparaColuna {
             }
         } else {
             addColumn = true;
-        }
-    }
-
-    private void comparaPk(Coluna colunaAtual) {
-        if (colunaAtual.getPk().equalsIgnoreCase("SIM")) {
-            if (tabelaAntiga.getListaColuna().contains(colunaAtual)) {
-                Coluna colunaAntiga = tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual));
-                if (!colunaAntiga.getPk().equalsIgnoreCase("SIM")) {
-                    resultado.append("<font color=GREEN>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(" criar chave primária.</font><br />");
-                    coluna.setPk("SIM");
-                    alterColumn = true;
-                } else {
-                    coluna.setPk(null);
-                }
-            } else {
-                coluna.setPk("SIM");
-                addColumn = true;
-            }
-        }
-    }
-
-    private void comparaFk(Coluna colunaAtual) {
-        boolean iguais;
-        if (colunaAtual.getFk() != null) {
-            if (tabelaAntiga.getListaColuna().contains(colunaAtual)) {
-                Coluna colunaAntiga = tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual));
-                if (colunaAntiga.getFk() != null) {
-                    comparaFkTabela(colunaAntiga.getFk(), colunaAtual.getFk());
-                    comparaFkColuna(colunaAntiga.getFk(), colunaAtual.getFk());
-                    comparaFkUpdate(colunaAntiga.getFk(), colunaAtual.getFk());
-                    comparaFkDelete(colunaAntiga.getFk(), colunaAtual.getFk());
-                    comparaFkNome(colunaAntiga.getFk(), colunaAtual.getFk());
-                    coluna.setFk(fk);
-                }
-            }
-            resultado.append("Adicionar a FK");
-            alterColumn = true;
-            coluna.setFk(colunaAtual.getFk());
-        }
-    }
-
-    private void comparaFkTabela(ForeignKey fkAntiga, ForeignKey fkNova) {
-        if (fkNova.getTabelaReferencia().equalsIgnoreCase(fkAntiga.getTabelaReferencia())) {
-            iguais = true;
-        } else {
-            fk.setTabelaReferencia(fkNova.getTabelaReferencia());
-        }
-    }
-
-    private void comparaFkColuna(ForeignKey fkAntiga, ForeignKey fkNova) {
-        if (fkNova.getColunaReferencia().equalsIgnoreCase(fkAntiga.getColunaReferencia())) {
-            iguais = true;
-        } else {
-            fk.setColunaReferencia(fkNova.getColunaReferencia());
-        }
-    }
-
-    private void comparaFkUpdate(ForeignKey fkAntiga, ForeignKey fkNova) {
-        if (fkNova.getUpdateRule().equals(fkAntiga.getUpdateRule())) {
-            iguais = true;
-        } else {
-            fk.setUpdateRule(fkNova.getUpdateRule());
-        }
-    }
-
-    private void comparaFkDelete(ForeignKey fkAntiga, ForeignKey fkNova) {
-        if (fkNova.getDeleteRule().equals(fkAntiga.getDeleteRule())) {
-            iguais = true;
-        } else {
-            fk.setDeleteRule(fkNova.getDeleteRule());
-        }
-    }
-
-    private void comparaFkNome(ForeignKey fkAntiga, ForeignKey fkNova) {
-        if (iguais) {
-            if (fkNova.getNome().equalsIgnoreCase(fkAntiga.getNome())) {
-                resultado.append("Constraints iguais");
-            } else {
-                resultado.append("Nomes diferentes, mas fazem a mesma coisa");
-                alterColumn = true;
-                fk = fkNova;
-            }
-        } else {
-            resultado.append("Constraints diferentes");
-            alterColumn = true;
-            fk = fkNova;
         }
     }
 }

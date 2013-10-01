@@ -2,6 +2,7 @@ package br.com.tcc.dao;
 
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.ForeignKey;
+import br.com.tcc.bean.PrimaryKey;
 import br.com.tcc.bean.Tabela;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -32,6 +33,8 @@ public class TabelaDAO {
             while (rs.next()) {
                 Tabela tab = new Tabela();
                 tab.setNome(rs.getString(3));
+                tab.setPk(checkPk(tab));
+                tab.setListaFk(checkFk(tab));
                 listaTabela.add(tab);
             }
         } catch (SQLException ex) {
@@ -42,8 +45,7 @@ public class TabelaDAO {
 
     public List<Coluna> listaColunas(Tabela tabela) {
         List<Coluna> listaColuna = new ArrayList<>();
-        try {
-            String pk = checkPk(tabela);
+        try {          
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getColumns(conexao.getCatalog(), "public", tabela.getNome(), null);
             while (rs.next()) {
@@ -53,12 +55,6 @@ public class TabelaDAO {
                 c.setTamanho(rs.getString(7));
                 c.setNulo(rs.getString(18));
                 c.setCasas(rs.getString(9));
-                c.setFk(checkFk(tabela, c.getNome()));
-                if (c.getNome().equals(pk)) {
-                    c.setPk("SIM");
-                } else {
-                    c.setPk("NÃO");
-                }
                 listaColuna.add(c);
             }
         } catch (SQLException ex) {
@@ -67,45 +63,42 @@ public class TabelaDAO {
         return listaColuna;
     }
 
-    private String checkPk(Tabela t) {
-        String nomePk = "";
+    private PrimaryKey checkPk(Tabela t) {
+        PrimaryKey pk = null;
         try {
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getPrimaryKeys(null, null, t.getNome());
             while (rs.next()) {
-                nomePk = rs.getString(4);
+                pk = new PrimaryKey();
+                pk.setColuna(rs.getString(4));
+                pk.setNome(rs.getString(6));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return nomePk;
+        return pk;
 
     }
 
-    private ForeignKey checkFk(Tabela t, String nomeColuna) {
-        ForeignKey fk = null;
-        boolean ok = false;
+    private List<ForeignKey> checkFk(Tabela t) {
+        List<ForeignKey> lista = new ArrayList<>();
         try {
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getImportedKeys(null, null, t.getNome());
             while (rs.next()) {
-                fk = new ForeignKey();
+                ForeignKey fk = new ForeignKey();
                 fk.setNome(rs.getString(12));
-                if (nomeColuna.equalsIgnoreCase(rs.getString(8))) {
-                    ok = true;
-                }
+                fk.setNomeColuna(rs.getString(8));
                 fk.setTabelaReferencia(rs.getString(3));
                 fk.setColunaReferencia(rs.getString(4));
                 fk.setUpdateRule(ruleType(rs.getShort(10)));
                 fk.setDeleteRule(ruleType(rs.getShort(11)));
+                lista.add(fk);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (ok) {
-            return fk;
-        }
-        return null;
+        return lista;
     }
 
     private ForeignKey.RuleType ruleType(short indice) {

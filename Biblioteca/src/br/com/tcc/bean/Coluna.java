@@ -14,8 +14,6 @@ public class Coluna {
     private String tamanho;
     private String nulo;
     private String casas;
-    private String pk;
-    private ForeignKey fk;
 
     public Coluna() {
     }
@@ -66,22 +64,6 @@ public class Coluna {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getPk() {
-        return pk;
-    }
-
-    public void setPk(String pk) {
-        this.pk = pk;
-    }
-
-    public ForeignKey getFk() {
-        return fk;
-    }
-
-    public void setFk(ForeignKey fk) {
-        this.fk = fk;
     }
 
     @Override

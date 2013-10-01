@@ -20,7 +20,8 @@ public class DeleteDAO {
 
     public void deletar(Tabela tabela) throws SQLException {
         String sql = String.format("drop table "
-                + "%s", tabela.getNome());
+                + "%s"
+                + "cascade", tabela.getNome());
         PreparedStatement pst = conexao.prepareStatement(sql);
         pst.executeUpdate();
         pst.close();

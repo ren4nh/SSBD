@@ -1,5 +1,7 @@
 package br.com.tcc.bean;
 
+import java.util.Objects;
+
 /**
  *
  * @author renan
@@ -67,5 +69,26 @@ public class ForeignKey {
 
     public void setNomeColuna(String nomeColuna) {
         this.nomeColuna = nomeColuna;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ForeignKey other = (ForeignKey) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
     }
 }

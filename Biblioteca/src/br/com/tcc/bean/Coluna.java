@@ -14,8 +14,8 @@ public class Coluna {
     private String tamanho;
     private String nulo;
     private String casas;
-    private boolean pk;
-    private boolean fk;
+    private String pk;
+    private ForeignKey fk;
 
     public Coluna() {
     }
@@ -68,19 +68,19 @@ public class Coluna {
         this.nome = nome;
     }
 
-    public boolean isPk() {
+    public String getPk() {
         return pk;
     }
 
-    public void setPk(boolean pk) {
+    public void setPk(String pk) {
         this.pk = pk;
     }
 
-    public boolean isFk() {
+    public ForeignKey getFk() {
         return fk;
     }
 
-    public void setFk(boolean fk) {
+    public void setFk(ForeignKey fk) {
         this.fk = fk;
     }
 

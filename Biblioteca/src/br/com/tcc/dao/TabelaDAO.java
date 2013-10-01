@@ -1,6 +1,7 @@
 package br.com.tcc.dao;
 
 import br.com.tcc.bean.Coluna;
+import br.com.tcc.bean.ForeignKey;
 import br.com.tcc.bean.Tabela;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -41,7 +42,6 @@ public class TabelaDAO {
 
     public List<Coluna> listaColunas(Tabela tabela) {
         List<Coluna> listaColuna = new ArrayList<>();
-        List<String> listaFk = checkFk(tabela);
         try {
             String pk = checkPk(tabela);
             DatabaseMetaData dmd = conexao.getMetaData();
@@ -53,16 +53,11 @@ public class TabelaDAO {
                 c.setTamanho(rs.getString(7));
                 c.setNulo(rs.getString(18));
                 c.setCasas(rs.getString(9));
-                c.setFk(false);
+                c.setFk(checkFk(tabela, c.getNome()));
                 if (c.getNome().equals(pk)) {
-                    c.setPk(true);
+                    c.setPk("SIM");
                 } else {
-                    c.setPk(false);
-                }
-                for (String string : listaFk) {
-                    if (c.getNome().equals(string)) {
-                        c.setFk(true);
-                    }
+                    c.setPk("NÃO");
                 }
                 listaColuna.add(c);
             }
@@ -87,17 +82,44 @@ public class TabelaDAO {
 
     }
 
-    private List<String> checkFk(Tabela t) {
-        List<String> lista = new ArrayList<>();
+    private ForeignKey checkFk(Tabela t, String nomeColuna) {
+        ForeignKey fk = null;
+        boolean ok = false;
         try {
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getImportedKeys(null, null, t.getNome());
             while (rs.next()) {
-                lista.add(rs.getString(8));
+                fk = new ForeignKey();
+                fk.setNome(rs.getString(12));
+                if (nomeColuna.equalsIgnoreCase(rs.getString(8))) {
+                    ok = true;
+                }
+                fk.setTabelaReferencia(rs.getString(3));
+                fk.setColunaReferencia(rs.getString(4));
+                fk.setUpdateRule(ruleType(rs.getShort(10)));
+                fk.setDeleteRule(ruleType(rs.getShort(11)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return lista;
+        if (ok) {
+            return fk;
+        }
+        return null;
+    }
+
+    private ForeignKey.RuleType ruleType(short indice) {
+        switch (indice) {
+            case 0:
+                return ForeignKey.RuleType.CASCADE;
+            case 1:
+                return ForeignKey.RuleType.RESTRICT;
+            case 2:
+                return ForeignKey.RuleType.NULL;
+            case 3:
+                return ForeignKey.RuleType.NOACTION;
+        }
+        return ForeignKey.RuleType.DEFAULT;
+
     }
 }

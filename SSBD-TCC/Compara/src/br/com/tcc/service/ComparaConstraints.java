@@ -20,23 +20,23 @@ public class ComparaConstraints {
             if (tabelaAtual.getPk().getColuna().equalsIgnoreCase(tabelaAntiga.getPk().getColuna())) {
                 if (tabelaAtual.getPk().getNome().equalsIgnoreCase(tabelaAntiga.getPk().getNome())) {
                     Auxiliar aux = new Auxiliar();
-                    aux.setResultado("Pk iguais");
+                    aux.setResultado("<font color=BLACK>Primary Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
                     return aux;
                 } else {
                     Auxiliar aux = new Auxiliar();
-                    aux.setResultado("Pk nomes diferentes");
+                    aux.setResultado("<font color=GREEN>Primary Keys possuem nomes diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
                     aux.setTabela(tabelaAtual);
                     return aux;
                 }
             } else {
                 Auxiliar aux = new Auxiliar();
-                aux.setResultado("Pk diferentes");
+                aux.setResultado("<font color=GREEN>Primary Keys são diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
                 aux.setTabela(tabelaAtual);
                 return aux;
             }
         } else {
             Auxiliar aux = new Auxiliar();
-            aux.setResultado("Pk não existe");
+            aux.setResultado("<font color=GREEN>Primary Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
             aux.setTabela(tabelaAtual);
             return aux;
         }
@@ -64,9 +64,9 @@ public class ComparaConstraints {
         aux.setTabela(tabelaAntiga);
         aux.getTabela().setListaFk(lista);
         if (!lista.isEmpty()) {
-            aux.setResultado("Fk não existe");
+            aux.setResultado("<font color=GREEN>Foreign Keys diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
         } else {
-            aux.setResultado("iguais");
+            aux.setResultado("<font color=BLACK>Foreign Keys Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
         }
         return aux;
     }

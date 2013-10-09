@@ -36,7 +36,7 @@ public class ComparaConstraints {
             }
         } else {
             Auxiliar aux = new Auxiliar();
-            aux.setResultado("<font color=GREEN>Primary Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            aux.setResultado("<font color=GREEN>Primary Key não existe na tabela " + tabelaAntiga.getNome() + "</font><br />");
             aux.setTabela(tabelaAtual);
             return aux;
         }

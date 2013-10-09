@@ -2,18 +2,32 @@
 <alter>
   <tabelas>
     <tabela>
+      <nome>testando</nome>
+      <colunas/>
+      <fks/>
+    </tabela>
+    <tabela>
       <nome>teste</nome>
       <colunas>
         <coluna>
-          <nome>agora</nome>
-          <acao>dropColumn</acao>
-          <tipo>varchar</tipo>
-          <tamanho>350</tamanho>
+          <nome>testando</nome>
+          <acao>addColumn</acao>
+          <tipo>int8</tipo>
+          <tamanho>19</tamanho>
           <nulo>YES</nulo>
           <casas>0</casas>
         </coluna>
       </colunas>
-      <fks/>
+      <fks>
+        <br.com.tcc.bean.ForeignKey>
+          <nome>fk_testando</nome>
+          <nomeColuna>testando</nomeColuna>
+          <tabelaReferencia>testando</tabelaReferencia>
+          <colunaReferencia>id</colunaReferencia>
+          <updateRule>NOACTION</updateRule>
+          <deleteRule>NOACTION</deleteRule>
+        </br.com.tcc.bean.ForeignKey>
+      </fks>
     </tabela>
   </tabelas>
 </alter>

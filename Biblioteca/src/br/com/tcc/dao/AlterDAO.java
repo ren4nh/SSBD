@@ -29,7 +29,10 @@ public class AlterDAO {
             if (!tabela.getListaColuna().isEmpty()) {
                 for (Coluna coluna : tabela.getListaColuna()) {
                     if (coluna.getAcao().equalsIgnoreCase("dropColumn")) {
-                        dropColumn(tabela.getNome(), coluna.getNome());
+                        try {
+                            dropColumn(tabela.getNome(), coluna.getNome());
+                        } catch (SQLException e) {
+                        }
                         if (tabela.getListaColuna().size() > contador) {
                             sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(" (").append(coluna.getTamanho()).append(!coluna.getCasas().equalsIgnoreCase("0") ? "," + coluna.getCasas() : "").append(")").append(" ").append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
                             contador++;
@@ -48,11 +51,10 @@ public class AlterDAO {
                 PreparedStatement pst = conexao.prepareStatement(sql.toString());
                 pst.executeUpdate();
                 pst.close();
-                addPrimaryKey(tabela);
-                for (ForeignKey foreignKey : tabela.getListaFk()) {
-                    addForeignKey(foreignKey, tabela.getNome());
-                }
-                conexao.close();
+            }
+            addPrimaryKey(tabela);
+            for (ForeignKey foreignKey : tabela.getListaFk()) {
+                addForeignKey(foreignKey, tabela.getNome());
             }
         }
     }
@@ -86,16 +88,14 @@ public class AlterDAO {
             pst.close();
         }
     }
-    
+
     private void addForeignKey(ForeignKey fk, String tabela) throws SQLException {
         StringBuilder sql = new StringBuilder();
         try {
             dropConstraint(tabela, fk.getNome());
         } catch (SQLException ex) {
         }
-        sql.append("alter table ").append(tabela).append(" add constraint ").append(fk.getNome()).append(" foreign key ").append("(").append(fk.getNomeColuna()).append(")").append
-                        (" references ").append(fk.getTabelaReferencia()).append(" (").append(fk.getColunaReferencia()).append(")").append
-                        ("match simple on update ").append(fk.getUpdateRule().toString()).append(" on delete ").append(fk.getDeleteRule().toString());
+        sql.append("alter table ").append(tabela).append(" add constraint ").append(fk.getNome()).append(" foreign key ").append("(").append(fk.getNomeColuna()).append(")").append(" references ").append(fk.getTabelaReferencia()).append(" (").append(fk.getColunaReferencia()).append(")").append("match simple on update ").append(fk.getUpdateRule().toString()).append(" on delete ").append(fk.getDeleteRule().toString());
         PreparedStatement pst = conexao.prepareStatement(sql.toString());
         pst.executeUpdate();
         pst.close();

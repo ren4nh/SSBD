@@ -2,13 +2,17 @@
 <alter>
   <tabelas>
     <tabela>
-      <nome>tabelanova</nome>
-      <colunas/>
-      <fks/>
-    </tabela>
-    <tabela>
       <nome>teste</nome>
-      <colunas/>
+      <colunas>
+        <coluna>
+          <nome>agora</nome>
+          <acao>dropColumn</acao>
+          <tipo>varchar</tipo>
+          <tamanho>350</tamanho>
+          <nulo>YES</nulo>
+          <casas>0</casas>
+        </coluna>
+      </colunas>
       <fks/>
     </tabela>
   </tabelas>

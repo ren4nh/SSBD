@@ -1,10 +1,12 @@
 package br.com.tcc.view;
 
+import br.com.tcc.bean.Alter;
 import br.com.tcc.service.ComparaTabela;
 import br.com.tcc.bean.Conexao;
 import br.com.tcc.bean.Create;
 import br.com.tcc.bean.Delete;
 import br.com.tcc.bean.Tabela;
+import br.com.tcc.dao.AlterDAO;
 import br.com.tcc.dao.CreateDAO;
 import br.com.tcc.dao.DeleteDAO;
 import br.com.tcc.principal.AbaConexaoTopComponent;
@@ -152,9 +154,11 @@ public final class ComparaTopComponent extends TopComponent {
         Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
         DeleteDAO del = new DeleteDAO(conexaoAntiga.getConexao());
         CreateDAO cre = new CreateDAO(conexaoAntiga.getConexao());
+        AlterDAO alt = new AlterDAO(conexaoAntiga.getConexao());
         LerXml l = new LerXml();
         Delete d = l.lerDelete();
         Create c = l.lerCreate();
+        Alter a = l.lerAlter();
         for (Tabela tabela : d.getListaTabelas()) {
             try {
                 del.deletar(tabela);
@@ -165,6 +169,13 @@ public final class ComparaTopComponent extends TopComponent {
         for (Tabela tabela : c.getListaTabela()) {
             try {
                 cre.create(tabela);
+            } catch (SQLException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+        for (Tabela tabela : a.getListaTabela()) {
+            try {
+                alt.alter(tabela);
             } catch (SQLException ex) {
                 Exceptions.printStackTrace(ex);
             }

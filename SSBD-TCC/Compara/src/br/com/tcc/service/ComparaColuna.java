@@ -17,7 +17,7 @@ public class ComparaColuna {
     private String baseAtual;
     StringBuilder resultado = new StringBuilder();
     private boolean addColumn = false;
-    private boolean alterColumn = false;
+    private boolean dropColumn = false;
     Coluna coluna = new Coluna();
     Auxiliar aux = new Auxiliar();
     ForeignKey fk = new ForeignKey();
@@ -41,9 +41,9 @@ public class ComparaColuna {
             if (addColumn) {
                 coluna.setAcao("addColumn");
                 tabelaAux.getListaColuna().add(coluna);
-            } else if (alterColumn) {
-                coluna.setAcao("alterColumn");
-                coluna.setNome(colunaAtual.getNome());
+            } else if (dropColumn) {
+                coluna = colunaAtual;
+                coluna.setAcao("dropColumn");
                 tabelaAux.getListaColuna().add(coluna);
             } else {
                 coluna.setAcao(null);
@@ -68,8 +68,7 @@ public class ComparaColuna {
             if (addColumn) {
                 coluna = colunaAtual;
             } else {
-                coluna.setNome(colunaAtual.getNome());
-                alterColumn = true;
+                dropColumn = true;
             }
         }
     }
@@ -81,8 +80,7 @@ public class ComparaColuna {
                 resultado.append("<font color=BLACK>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual)).getNome()).append(" possuem o mesmo tipo.</font><br />");
             } else {
                 resultado.append("<font color=GREEN>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(" possuem tipos diferentes.</font><br />");
-                coluna.setTipo(colunaAtual.getTipo());
-                alterColumn = true;
+                dropColumn = true;
             }
         } else {
             addColumn = true;
@@ -96,8 +94,7 @@ public class ComparaColuna {
                 resultado.append("<font color=BLACK>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual)).getNome()).append(" possuem o mesmo tamanho.</font><br />");
             } else {
                 resultado.append("<font color=GREEN>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(" possuem tamanho diferentes.</font><br />");
-                coluna.setTamanho(colunaAtual.getTamanho());
-                alterColumn = true;
+                dropColumn = true;
             }
         } else {
             addColumn = true;
@@ -111,8 +108,7 @@ public class ComparaColuna {
                 resultado.append("<font color=BLACK>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual)).getNome()).append(" possuem o mesmo tamanho.</font><br />");
             } else {
                 resultado.append("<font color=GREEN>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(" possuem tamanho diferentes.</font><br />");
-                coluna.setNulo(colunaAtual.getNulo());
-                alterColumn = true;
+                dropColumn = true;
             }
         } else {
             addColumn = true;
@@ -126,8 +122,7 @@ public class ComparaColuna {
                 resultado.append("<font color=BLACK>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(tabelaAntiga.getListaColuna().get(tabelaAntiga.getListaColuna().indexOf(colunaAtual)).getNome()).append(" possuem as mesmas casas decimais.</font><br />");
             } else {
                 resultado.append("<font color=GREEN>As colunas ").append(baseAtual).append(".").append(tabelaAtual.getNome()).append(".").append(colunaAtual.getNome()).append(" e ").append(baseAntiga).append(".").append(tabelaAntiga.getNome()).append(".").append(" possuem casas decimais diferentes.</font><br />");
-                coluna.setCasas(colunaAtual.getCasas());
-                alterColumn = true;
+                dropColumn = true;
             }
         } else {
             addColumn = true;

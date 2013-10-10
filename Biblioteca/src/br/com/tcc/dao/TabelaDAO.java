@@ -55,6 +55,9 @@ public class TabelaDAO {
                 c.setTamanho(rs.getString(7));
                 c.setNulo(rs.getString(18));
                 c.setCasas(rs.getString(9));
+                if (c.getTipo().equalsIgnoreCase("int8")) {
+                    c.setTamanho("0");
+                }
                 listaColuna.add(c);
             }
         } catch (SQLException ex) {

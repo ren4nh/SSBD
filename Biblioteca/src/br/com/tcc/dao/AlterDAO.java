@@ -24,27 +24,43 @@ public class AlterDAO {
     public void alter(Tabela tabela) throws SQLException {
         int contador = 1;
         StringBuilder sql = new StringBuilder();
+        String tamanho = "";
+        String casas = "";
         if (tabela != null) {
             sql.append("alter table ").append(tabela.getNome());
             if (!tabela.getListaColuna().isEmpty()) {
                 for (Coluna coluna : tabela.getListaColuna()) {
+                    tamanho = "";
+                    casas = "";
                     if (coluna.getAcao().equalsIgnoreCase("dropColumn")) {
                         try {
                             dropColumn(tabela.getNome(), coluna.getNome());
                         } catch (SQLException e) {
                         }
+                        if (coluna.getCasas().equalsIgnoreCase("0")) {
+                            casas = "," + coluna.getCasas();
+                        }
+                        if (!coluna.getTamanho().equalsIgnoreCase("0")) {
+                            tamanho = " (" + coluna.getTamanho() + casas + ") ";
+                        }
                         if (tabela.getListaColuna().size() > contador) {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(" (").append(coluna.getTamanho()).append(!coluna.getCasas().equalsIgnoreCase("0") ? "," + coluna.getCasas() : "").append(")").append(" ").append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
                             contador++;
                         } else {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(" (").append(coluna.getTamanho()).append(!coluna.getCasas().equalsIgnoreCase("0") ? "," + coluna.getCasas() : "").append(")").append(" ").append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(" ");
                         }
                     } else {
+                        if (coluna.getCasas().equalsIgnoreCase("0")) {
+                            casas = "," + coluna.getCasas();
+                        }
+                        if (!coluna.getTamanho().equalsIgnoreCase("0")) {
+                            tamanho = " (" + coluna.getTamanho() + casas + ") ";
+                        }
                         if (tabela.getListaColuna().size() > contador) {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(" (").append(coluna.getTamanho()).append(!coluna.getCasas().equalsIgnoreCase("0") ? "," + coluna.getCasas() : "").append(")").append(" ").append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
                             contador++;
                         } else {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(" (").append(coluna.getTamanho()).append(!coluna.getCasas().equalsIgnoreCase("0") ? "," + coluna.getCasas() : "").append(")").append(" ").append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(" ");
                         }
                     }
                 }
@@ -95,7 +111,7 @@ public class AlterDAO {
             dropConstraint(tabela, fk.getNome());
         } catch (SQLException ex) {
         }
-        sql.append("alter table ").append(tabela).append(" add constraint ").append(fk.getNome()).append(" foreign key ").append("(").append(fk.getNomeColuna()).append(")").append(" references ").append(fk.getTabelaReferencia()).append(" (").append(fk.getColunaReferencia()).append(")").append("match simple on update ").append(fk.getUpdateRule().toString()).append(" on delete ").append(fk.getDeleteRule().toString());
+        sql.append("alter table ").append(tabela).append(" add constraint ").append(fk.getNome()).append(" foreign key ").append("(").append(fk.getNomeColuna()).append(")").append(" references ").append(fk.getTabelaReferencia()).append(" (").append(fk.getColunaReferencia()).append(")").append("match simple on update ").append(fk.getUpdateRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : fk.getUpdateRule().toString()).append(" on delete ").append(fk.getDeleteRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : fk.getDeleteRule().toString());
         PreparedStatement pst = conexao.prepareStatement(sql.toString());
         pst.executeUpdate();
         pst.close();

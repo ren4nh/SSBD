@@ -8,26 +8,8 @@
     </tabela>
     <tabela>
       <nome>teste</nome>
-      <colunas>
-        <coluna>
-          <nome>testando</nome>
-          <acao>addColumn</acao>
-          <tipo>int8</tipo>
-          <tamanho>19</tamanho>
-          <nulo>YES</nulo>
-          <casas>0</casas>
-        </coluna>
-      </colunas>
-      <fks>
-        <br.com.tcc.bean.ForeignKey>
-          <nome>fk_testando</nome>
-          <nomeColuna>testando</nomeColuna>
-          <tabelaReferencia>testando</tabelaReferencia>
-          <colunaReferencia>id</colunaReferencia>
-          <updateRule>NOACTION</updateRule>
-          <deleteRule>NOACTION</deleteRule>
-        </br.com.tcc.bean.ForeignKey>
-      </fks>
+      <colunas/>
+      <fks/>
     </tabela>
   </tabelas>
 </alter>

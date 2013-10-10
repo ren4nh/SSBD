@@ -32,6 +32,8 @@ public class ComparaColuna {
     public Auxiliar compara() {
         Tabela tabelaAux = new Tabela();
         for (Coluna colunaAtual : tabelaAtual.getListaColuna()) {
+            addColumn = false;
+            dropColumn = false;
             coluna = new Coluna();
             comparaTipo(colunaAtual);
             comparaCasas(colunaAtual);

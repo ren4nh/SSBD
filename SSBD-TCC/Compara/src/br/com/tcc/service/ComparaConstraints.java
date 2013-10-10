@@ -16,7 +16,7 @@ public class ComparaConstraints {
     private boolean iguais = false;
 
     public Auxiliar comparaPk(Tabela tabelaAtual, Tabela tabelaAntiga) {
-        if (tabelaAntiga.getPk() != null) {
+        if (tabelaAntiga.getPk() != null && tabelaAtual.getPk() != null) {
             if (tabelaAtual.getPk().getColuna().equalsIgnoreCase(tabelaAntiga.getPk().getColuna())) {
                 if (tabelaAtual.getPk().getNome().equalsIgnoreCase(tabelaAntiga.getPk().getNome())) {
                     Auxiliar aux = new Auxiliar();

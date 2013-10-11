@@ -2,6 +2,7 @@ package br.com.tcc.principal;
 
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.Tabela;
+import java.io.File;
 import java.util.Collection;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -53,6 +54,7 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
 
         //Add the dynamic object to the TopComponent Lookup:
         associateLookup(new AbstractLookup(content));
+        deleteFile();
     }
 
     /**
@@ -166,5 +168,20 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
                 resultChanged(new LookupEvent(result));
             }
         });
+    }
+    
+    private void deleteFile() {
+        File create = new File("create.xml");
+        if (create.exists()) {
+            create.delete();
+        }
+        File alter = new File("alter.xml");
+        if (alter.exists()) {
+            alter.delete();
+        }
+        File delete = new File("delete.xml");
+        if (delete.exists()) {
+            delete.delete();
+        }
     }
 }

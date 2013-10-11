@@ -19,7 +19,7 @@ import org.openide.util.NbBundle.Messages;
         iconBase = "br/com/tcc/principal/image/New-Database-icon.png",
         displayName = "#CTL_NovaConexao")
 @ActionReferences({
-    @ActionReference(path = "Menu/Comparar", position = 700),
+    @ActionReference(path = "Menu/Comparar", position = 600),
     @ActionReference(path = "Toolbars/File", position = -400)
 })
 @Messages("CTL_NovaConexao=Nova Conexao")

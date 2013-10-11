@@ -2,11 +2,6 @@
 <alter>
   <tabelas>
     <tabela>
-      <nome>testando</nome>
-      <colunas/>
-      <fks/>
-    </tabela>
-    <tabela>
       <nome>teste</nome>
       <colunas/>
       <fks/>

@@ -20,7 +20,8 @@ public class RootNode extends AbstractNode {
     @Override
     public Action[] getActions(boolean context) {
         Action[] result = new Action[]{
-            new NewConexaoAction()
+            new NewConexaoAction(),
+            new RefreshAction()
         };
         return result;
     }
@@ -36,6 +37,18 @@ public class RootNode extends AbstractNode {
             ConexaoTopComponent c = new ConexaoTopComponent();
             c.open();
             c.requestActive();
+        }
+    }
+
+    private final class RefreshAction extends AbstractAction {
+
+        public RefreshAction() {
+            putValue(Action.NAME, "Refresh");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AbaConexaoTopComponent.criarArvore();
         }
     }
 }

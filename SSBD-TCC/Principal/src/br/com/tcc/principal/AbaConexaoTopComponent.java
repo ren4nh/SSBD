@@ -124,6 +124,4 @@ public final class AbaConexaoTopComponent extends TopComponent implements Explor
         return em;
     }
 
-    public void nodoSelecionado() {
-    }
 }

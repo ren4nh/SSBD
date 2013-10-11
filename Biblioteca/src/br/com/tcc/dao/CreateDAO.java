@@ -27,8 +27,10 @@ public class CreateDAO {
         if (t != null) {
             sql.append("create table ").append(t.getNome()).append(" ( ");
             for (Coluna coluna : t.getListaColuna()) {
+                tamanho = "";
+                casas = "";
                 if (t.getListaColuna().size() > contador) {
-                     if (coluna.getCasas().equalsIgnoreCase("0")) {
+                     if (!coluna.getCasas().equalsIgnoreCase("0")) {
                         casas = "," + coluna.getCasas();
                     }
                     if (!coluna.getTamanho().equalsIgnoreCase("0")) {
@@ -38,6 +40,12 @@ public class CreateDAO {
                             (coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
                     contador ++;
                 } else {
+                     if (!coluna.getCasas().equalsIgnoreCase("0")) {
+                        casas = "," + coluna.getCasas();
+                    }
+                    if (!coluna.getTamanho().equalsIgnoreCase("0")) {
+                        tamanho = " (" + coluna.getTamanho() + casas + ") ";
+                    }
                     sql.append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append
                             (coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(" ");
                 }
@@ -55,7 +63,6 @@ public class CreateDAO {
             PreparedStatement pst = conexao.prepareStatement(sql.toString());
             pst.executeUpdate();
             pst.close();
-            conexao.close();
         }
     }
 }

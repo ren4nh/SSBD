@@ -21,8 +21,13 @@ public class LerXml {
         xstream.alias("tabela", Tabela.class);
         xstream.alias("coluna", Coluna.class);
         xstream.autodetectAnnotations(true);
-        Create c = (Create) xstream.fromXML(new File("create.xml"));
-        return c;
+        File f = new File("create.xml");
+        if (f.exists()) {
+            Create c = (Create) xstream.fromXML(f);
+            return c;
+        } else {
+            return null;
+        }
     }
 
     public Delete lerDelete() {
@@ -30,8 +35,14 @@ public class LerXml {
         xstream.alias("delete", Delete.class);
         xstream.alias("tabela", Tabela.class);
         xstream.autodetectAnnotations(true);
-        Delete d = (Delete) xstream.fromXML(new File("delete.xml"));
-        return d;
+        File f = new File("delete.xml");
+        if (f.exists()) {
+            Delete d = (Delete) xstream.fromXML(f);
+            return d;
+        } else {
+            return null;
+        }
+
     }
 
     public Alter lerAlter() {
@@ -40,7 +51,11 @@ public class LerXml {
         xstream.alias("tabela", Tabela.class);
         xstream.alias("coluna", Coluna.class);
         xstream.autodetectAnnotations(true);
-        Alter a = (Alter) xstream.fromXML(new File("alter.xml"));
-        return a;
+        File f = new File("alter.xml");
+        if (f.exists()) {
+            Alter a = (Alter) xstream.fromXML(new File("alter.xml"));
+            return a;
+        }
+        return null;
     }
 }

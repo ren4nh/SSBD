@@ -1,6 +1,7 @@
 package br.com.tcc.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 public class Delete {
 
     @XStreamAlias("tabelas")
-    private List<Tabela> listaTabelas;
+    private List<Tabela> listaTabelas = new ArrayList<>();
 
     public Delete() {
     }

@@ -2,6 +2,7 @@ package br.com.tcc.service;
 
 import br.com.tcc.bean.Alter;
 import br.com.tcc.bean.Auxiliar;
+import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.Conexao;
 import br.com.tcc.bean.Create;
 import br.com.tcc.bean.Delete;
@@ -53,6 +54,19 @@ public class ComparaTabela {
                 resultado.append("<font color=RED>Deverá ser deletada a tabela ").append(tabelaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
                 tabelaAntiga.setListaColuna(null);
                 listaDelete.add(tabelaAntiga);
+            } else {
+                Tabela tabDelete = new Tabela();
+                Tabela tabelaAtual = baseAtual.getListaTabelas().get(baseAtual.getListaTabelas().indexOf(tabelaAntiga));
+                for (Coluna colunaAntiga : tabelaAntiga.getListaColuna()) {
+                    if (!tabelaAtual.getListaColuna().contains(colunaAntiga)) {
+                        tabDelete.getListaColuna().add(colunaAntiga);
+                        resultado.append("<font color=RED>Deverá ser deletada a coluna ").append(tabelaAntiga.getNome()).append(".").append(colunaAntiga.getNome()).append(" na base de dados ").append(baseAntiga.getNome()).append("</font><br />");
+                    }
+                }
+                if (!tabDelete.getListaColuna().isEmpty()) {
+                    tabDelete.setNome(tabelaAntiga.getNome());
+                    listaDelete.add(tabDelete);
+                }
             }
         }
         resultado.append("</html>");

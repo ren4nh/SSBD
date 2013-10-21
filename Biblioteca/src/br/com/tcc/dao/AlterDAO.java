@@ -44,10 +44,10 @@ public class AlterDAO {
                             tamanho = " (" + coluna.getTamanho() + casas + ") ";
                         }
                         if (tabela.getListaColuna().size() > contador) {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? " not null" : "").append(",");
                             contador++;
                         } else {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(" ");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? " not null" : "").append(" ");
                         }
                     } else {
                         if (coluna.getCasas().equalsIgnoreCase("0")) {
@@ -57,10 +57,10 @@ public class AlterDAO {
                             tamanho = " (" + coluna.getTamanho() + casas + ") ";
                         }
                         if (tabela.getListaColuna().size() > contador) {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(",");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? " not null" : "").append(",");
                             contador++;
                         } else {
-                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? "not null" : "").append(" ");
+                            sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? " not null" : "").append(" ");
                         }
                     }
                 }

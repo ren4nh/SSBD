@@ -22,7 +22,7 @@ public class DeleteDAO {
     public void deletar(Tabela tabela) throws SQLException {
         StringBuilder sql = new StringBuilder();
         int contador = 0;
-        if (tabela.getListaColuna().isEmpty()) {
+        if (tabela.getListaColuna() == null) {
             sql.append("drop table ").append(tabela.getNome());
         } else {
             sql.append("alter table ").append(tabela.getNome());
@@ -38,5 +38,24 @@ public class DeleteDAO {
         PreparedStatement pst = conexao.prepareStatement(sql.toString());
         pst.executeUpdate();
         pst.close();
+    }
+
+    public String deletarScript(Tabela tabela) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        int contador = 0;
+        if (tabela.getListaColuna() == null) {
+            sql.append("drop table ").append(tabela.getNome());
+        } else {
+            sql.append("alter table ").append(tabela.getNome());
+            for (Coluna coluna : tabela.getListaColuna()) {
+                if (contador > 1) {
+                    sql.append(" drop column ").append(coluna.getNome()).append(" cascade, ");
+                } else {
+                    sql.append(" drop column ").append(coluna.getNome());
+                }
+            }
+        }
+        sql.append(" cascade");
+        return sql.toString();
     }
 }

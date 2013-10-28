@@ -34,6 +34,12 @@
         <file name="View_hidden"/>
         <file name="Window_hidden"/>
     </folder>
+    <folder name="QuickSearch">
+        <folder name="Salvar">
+            <attr name="command" stringvalue=""/>
+            <attr name="position" intvalue="0"/>
+        </folder>
+    </folder>
     <folder name="Toolbars">
         <folder name="Clipboard">
             <file name="org-openide-actions-CopyAction.shadow_hidden"/>

@@ -2,8 +2,22 @@
 <alter>
   <tabelas>
     <tabela>
-      <nome>teste</nome>
+      <nome>auxiliar</nome>
       <colunas/>
+      <fks/>
+    </tabela>
+    <tabela>
+      <nome>teste</nome>
+      <colunas>
+        <coluna>
+          <nome>descricao</nome>
+          <acao>addColumn</acao>
+          <tipo>varchar</tipo>
+          <tamanho>233</tamanho>
+          <nulo>YES</nulo>
+          <casas>0</casas>
+        </coluna>
+      </colunas>
       <fks/>
     </tabela>
   </tabelas>

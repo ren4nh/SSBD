@@ -10,9 +10,7 @@ import br.com.tcc.dao.AlterDAO;
 import br.com.tcc.dao.CreateDAO;
 import br.com.tcc.dao.DeleteDAO;
 import br.com.tcc.principal.AbaConexaoTopComponent;
-import br.com.tcc.service.ComparaColuna;
 import br.com.tcc.xml.LerXml;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -231,6 +229,50 @@ public final class ComparaTopComponent extends TopComponent {
             return ok;
         }
         return ok;
+    }
+    public String geraScript() {
+        StringBuilder script = new StringBuilder();
+        Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
+        if (conexaoAntiga != null) {
+            DeleteDAO del = new DeleteDAO(conexaoAntiga.getConexao());
+            CreateDAO cre = new CreateDAO(conexaoAntiga.getConexao());
+            AlterDAO alt = new AlterDAO(conexaoAntiga.getConexao());
+            LerXml l = new LerXml();
+            Delete d = l.lerDelete();
+            Create c = l.lerCreate();
+            Alter a = l.lerAlter();
+            if (d != null) {               
+            for (Tabela tabela : d.getListaTabelas()) {
+                try {
+                    script.append(del.deletarScript(tabela));
+                    script.append("\n");
+                } catch (SQLException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+            }
+            if (c != null) {                
+            for (Tabela tabela : c.getListaTabela()) {
+                try {
+                    script.append(cre.createScript(tabela));
+                    script.append("\n");
+                } catch (SQLException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+            }
+            if (a != null) {
+            for (Tabela tabela : a.getListaTabela()) {
+                try {
+                    script.append(alt.alterScript(tabela));
+                    script.append("\n");
+                } catch (SQLException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+            }
+        }
+        return script.toString();
     }
 
     private boolean valida() {

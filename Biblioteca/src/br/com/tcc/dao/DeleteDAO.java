@@ -55,7 +55,7 @@ public class DeleteDAO {
                 }
             }
         }
-        sql.append(" cascade");
+        sql.append(" cascade;");
         return sql.toString();
     }
 }

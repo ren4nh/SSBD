@@ -97,6 +97,7 @@ public class CreateDAO {
                 sql.append(", constraint ").append(foreignKey.getNome()).append(" foreign key ").append("(").append(foreignKey.getNomeColuna()).append(")").append(" references ").append(foreignKey.getTabelaReferencia()).append(" (").append(foreignKey.getColunaReferencia()).append(")").append("match simple on update ").append(foreignKey.getUpdateRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : foreignKey.getUpdateRule().toString()).append(" on delete ").append(foreignKey.getDeleteRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : foreignKey.getDeleteRule().toString());
             }
             sql.append(")");
+            sql.append(";");
         }
         return sql.toString();
     }

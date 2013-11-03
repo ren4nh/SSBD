@@ -13,10 +13,16 @@ public class ColunaNode extends AbstractNode {
 
     private Coluna coluna;
 
-    public ColunaNode(Coluna key) {
+    public ColunaNode(Coluna key, boolean pk, boolean fk) {
         super(Children.LEAF, Lookups.fixed(new Object[]{key}));
         this.coluna = key;
         setDisplayName(key.getNome());
-        setIconBaseWithExtension("br/com/tcc/principal/image/coluna.png");
+        if (fk) {
+            setIconBaseWithExtension("br/com/tcc/principal/image/fkey.gif");
+        } else if (pk) {
+            setIconBaseWithExtension("br/com/tcc/principal/image/pkey.gif");
+        } else {
+            setIconBaseWithExtension("br/com/tcc/principal/image/coluna.png");
+        }
     }
 }

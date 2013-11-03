@@ -21,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
         displayName = "#CTL_Sincronizar")
 @ActionReferences({
     @ActionReference(path = "Menu/Ações", position = 900),
-    @ActionReference(path = "Toolbars/File", position = -200)
+    @ActionReference(path = "Toolbars/File", position = -300)
 })
 @Messages("CTL_Sincronizar=Sincronizar Automaticamente")
 public final class Sincronizar implements ActionListener {

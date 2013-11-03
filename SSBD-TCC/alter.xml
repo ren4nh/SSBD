@@ -2,22 +2,18 @@
 <alter>
   <tabelas>
     <tabela>
-      <nome>auxiliar</nome>
+      <nome>agora2</nome>
+      <colunas/>
+      <fks/>
+    </tabela>
+    <tabela>
+      <nome>teass</nome>
       <colunas/>
       <fks/>
     </tabela>
     <tabela>
       <nome>teste</nome>
-      <colunas>
-        <coluna>
-          <nome>descricao</nome>
-          <acao>addColumn</acao>
-          <tipo>varchar</tipo>
-          <tamanho>233</tamanho>
-          <nulo>YES</nulo>
-          <casas>0</casas>
-        </coluna>
-      </colunas>
+      <colunas/>
       <fks/>
     </tabela>
   </tabelas>

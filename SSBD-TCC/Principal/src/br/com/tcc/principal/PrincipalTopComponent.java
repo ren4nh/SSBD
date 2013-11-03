@@ -73,11 +73,11 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
 
             },
             new String [] {
-                "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null", "Chave Primária", "Chave Estrangeira"
+                "Nome", "Tipo", "Tamanho", "Casas Decimais", "Null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -85,6 +85,11 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
             }
         });
         jScrollPane1.setViewportView(tabela);
+        tabela.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(PrincipalTopComponent.class, "PrincipalTopComponent.tabela.columnModel.title0")); // NOI18N
+        tabela.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(PrincipalTopComponent.class, "PrincipalTopComponent.tabela.columnModel.title1")); // NOI18N
+        tabela.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(PrincipalTopComponent.class, "PrincipalTopComponent.tabela.columnModel.title2")); // NOI18N
+        tabela.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(PrincipalTopComponent.class, "PrincipalTopComponent.tabela.columnModel.title3")); // NOI18N
+        tabela.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(PrincipalTopComponent.class, "PrincipalTopComponent.tabela.columnModel.title4")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -146,7 +151,7 @@ public final class PrincipalTopComponent extends TopComponent implements LookupL
                 dtm.getDataVector().removeAllElements();
                 dtm.fireTableDataChanged();
                 for (Coluna coluna : tab.getListaColuna()) {
-                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo(), coluna.getNome().equalsIgnoreCase(tab.getPk().getColuna()) ? "Sim" : "Não"});
+                    dtm.addRow(new Object[]{coluna.getNome(), coluna.getTipo(), coluna.getTamanho(), coluna.getCasas(), coluna.getNulo()});
                 }
             }
         } else {

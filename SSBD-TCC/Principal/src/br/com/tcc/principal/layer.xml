@@ -7,7 +7,8 @@
         </folder>
     </folder>
     <folder name="Menu">
-        <folder name="Ações">
+        <file name="Ações_hidden"/>
+        <folder name="SSBD">
             <file name="br-com-tcc-principal-GeraScript.shadow">
                 <attr name="originalFile" stringvalue="Actions/Edit/br-com-tcc-principal-GeraScript.instance"/>
                 <attr name="position" intvalue="800"/>
@@ -23,6 +24,10 @@
             <file name="br-com-tcc-service-Comparar.shadow">
                 <attr name="originalFile" stringvalue="Actions/Edit/br-com-tcc-service-Comparar.instance"/>
                 <attr name="position" intvalue="700"/>
+            </file>
+            <file name="br-com-tcc-view-Sincronizar.shadow">
+                <attr name="originalFile" stringvalue="Actions/Edit/br-com-tcc-view-Sincronizar.instance"/>
+                <attr name="position" intvalue="900"/>
             </file>
         </folder>
         <file name="Comparar_hidden"/>

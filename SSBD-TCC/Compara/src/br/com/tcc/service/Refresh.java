@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.tcc.principal;
+package br.com.tcc.service;
 
+import br.com.tcc.principal.AbaConexaoTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
@@ -14,21 +15,18 @@ import org.openide.util.NbBundle.Messages;
 
 @ActionID(
         category = "Edit",
-        id = "br.com.tcc.principal.NovaConexao")
+        id = "br.com.tcc.service.Refresh")
 @ActionRegistration(
-        iconBase = "br/com/tcc/principal/image/New-Database-icon.png",
-        displayName = "#CTL_NovaConexao")
+        iconBase = "br/com/tcc/service/refresh.png",
+        displayName = "#CTL_Refresh")
 @ActionReferences({
-    @ActionReference(path = "Menu/Comparar", position = 600),
-    @ActionReference(path = "Toolbars/File", position = -500)
+    @ActionReference(path = "Toolbars/File", position = -100)
 })
-@Messages("CTL_NovaConexao=Nova Conexao")
-public final class NovaConexao implements ActionListener {
+@Messages("CTL_Refresh=Atualizar")
+public final class Refresh implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ConexaoTopComponent c = new ConexaoTopComponent();
-        c.open();
-        c.requestActive();
+        AbaConexaoTopComponent.criarArvore();
     }
 }

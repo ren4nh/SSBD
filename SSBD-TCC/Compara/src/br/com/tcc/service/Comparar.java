@@ -21,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
         displayName = "#CTL_Comparar")
 @ActionReferences({
     @ActionReference(path = "Menu/Comparar", position = 800),
-    @ActionReference(path = "Toolbars/File", position = -300)
+    @ActionReference(path = "Toolbars/File", position = -400)
 })
 @Messages("CTL_Comparar=Comparar BD")
 public final class Comparar implements ActionListener {

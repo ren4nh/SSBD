@@ -2,6 +2,7 @@ package br.com.tcc.principal.node;
 
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.ForeignKey;
+import br.com.tcc.bean.PrimaryKey;
 import br.com.tcc.bean.Tabela;
 import java.util.ArrayList;
 import org.openide.nodes.Index;
@@ -25,9 +26,9 @@ public class ColunaChildren extends Index.ArrayChildren {
         for (Coluna coluna : tabela.getListaColuna()) {
             boolean pk = false;
             boolean fk = false;
-            if (tabela.getPk() != null) {
-                if (tabela.getPk().getColuna().equalsIgnoreCase(coluna.getNome())) {
-                    pk = true;
+            for (PrimaryKey foreignKey : tabela.getPk()) {
+                if (foreignKey.getColuna().equalsIgnoreCase(coluna.getNome())) {
+                    fk = true;
                 }
             }
             for (ForeignKey foreignKey : tabela.getListaFk()) {

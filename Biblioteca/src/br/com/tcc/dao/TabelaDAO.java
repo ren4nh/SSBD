@@ -66,20 +66,21 @@ public class TabelaDAO {
         return listaColuna;
     }
 
-    private PrimaryKey checkPk(Tabela t) {
-        PrimaryKey pk = null;
+    private List<PrimaryKey> checkPk(Tabela t) {
+        List<PrimaryKey> lista = new ArrayList<>();
         try {
             DatabaseMetaData dmd = conexao.getMetaData();
             ResultSet rs = dmd.getPrimaryKeys(null, null, t.getNome());
             while (rs.next()) {
-                pk = new PrimaryKey();
+                PrimaryKey pk = new PrimaryKey();
                 pk.setColuna(rs.getString(4));
                 pk.setNome(rs.getString(6));
+                lista.add(pk);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return pk;
+        return lista;
 
     }
 

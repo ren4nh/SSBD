@@ -14,7 +14,7 @@ public class Tabela {
     private String nome;
     @XStreamAlias("colunas")
     private List<Coluna> listaColuna = new ArrayList<>();
-    private PrimaryKey pk;
+    private List<PrimaryKey> pk = new ArrayList<>();
     @XStreamAlias("fks")
     private List<ForeignKey> listaFk = new ArrayList<>();
 
@@ -37,11 +37,11 @@ public class Tabela {
         this.listaColuna = listaColuna;
     }
 
-    public PrimaryKey getPk() {
+    public List<PrimaryKey> getPk() {
         return pk;
     }
 
-    public void setPk(PrimaryKey pk) {
+    public void setPk(List<PrimaryKey> pk) {
         this.pk = pk;
     }
 

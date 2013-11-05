@@ -2,6 +2,7 @@ package br.com.tcc.dao;
 
 import br.com.tcc.bean.Coluna;
 import br.com.tcc.bean.ForeignKey;
+import br.com.tcc.bean.PrimaryKey;
 import br.com.tcc.bean.Tabela;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,7 +69,19 @@ public class AlterDAO {
                 pst.executeUpdate();
                 pst.close();
             }
-            addPrimaryKey(tabela);
+            String pk = "";
+            String nomePk = "";
+            int i = 1;
+            for (PrimaryKey primaryKey : tabela.getPk()) {
+                if (i > 1) {
+                    pk += ", " + primaryKey.getColuna();
+                } else {
+                    pk += primaryKey.getColuna();
+                }
+                nomePk = primaryKey.getNome();
+                i++;
+            }
+            addPrimaryKey(tabela, nomePk, pk);
             for (ForeignKey foreignKey : tabela.getListaFk()) {
                 addForeignKey(foreignKey, tabela.getNome());
             }
@@ -123,13 +136,25 @@ public class AlterDAO {
                     if (!column.isEmpty()) {
                         s.append(column).append("\n");
                     }
-                   
+
                     sql.append(";");
                     sql.append("\n");
                     s.append(sql.toString());
                 }
             }
-            s.append(addPrimaryKeyScript(tabela));
+            String pk = "";
+            String nomePk = "";
+            int i = 1;
+            for (PrimaryKey primaryKey : tabela.getPk()) {
+                if (i > 1) {
+                    pk += ", " + primaryKey.getColuna();
+                } else {
+                    pk += primaryKey.getColuna();
+                }
+                nomePk = primaryKey.getNome();
+                i++;
+            }
+            s.append(addPrimaryKeyScript(tabela, nomePk, pk));
             for (ForeignKey foreignKey : tabela.getListaFk()) {
                 s.append(addForeignKeyScript(foreignKey, tabela.getNome()));
             }
@@ -155,7 +180,7 @@ public class AlterDAO {
 
     private void dropConstraint(String tabela, String nome) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("alter table ").append(tabela).append(" drop constraint ").append(nome);
+        sql.append("alter table ").append(tabela).append(" drop constraint if exists ").append(nome);
         PreparedStatement pst = conexao.prepareStatement(sql.toString());
         pst.executeUpdate();
         pst.close();
@@ -163,34 +188,34 @@ public class AlterDAO {
 
     private String dropConstraintScript(String tabela, String nome) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("alter table ").append(tabela).append(" drop constraint ").append(nome);
+        sql.append("alter table ").append(tabela).append(" drop constraint if exists ").append(nome);
         sql.append(";");
         sql.append("\n");
         return sql.toString();
     }
 
-    private void addPrimaryKey(Tabela t) throws SQLException {
+    private void addPrimaryKey(Tabela t, String nomePk, String pk) throws SQLException {
         if (t.getPk() != null) {
             try {
-                dropConstraint(t.getNome(), t.getPk().getNome());
+                dropConstraint(t.getNome(), nomePk);
             } catch (SQLException e) {
             }
             StringBuilder sql = new StringBuilder();
-            sql.append("alter table ").append(t.getNome()).append(" add constraint ").append(t.getPk().getNome()).append(" primary key ").append("(").append(t.getPk().getColuna()).append(")");
+            sql.append("alter table ").append(t.getNome()).append(" add constraint ").append(nomePk).append(" primary key ").append("(").append(pk).append(")");
             PreparedStatement pst = conexao.prepareStatement(sql.toString());
             pst.executeUpdate();
             pst.close();
         }
     }
 
-    private String addPrimaryKeyScript(Tabela t) throws SQLException {
+    private String addPrimaryKeyScript(Tabela t, String nomePk, String pk) throws SQLException {
         StringBuilder sql = new StringBuilder();
         if (t.getPk() != null) {
             try {
-                dropConstraint(t.getNome(), t.getPk().getNome());
+                sql.append(dropConstraintScript(t.getNome(), nomePk));
             } catch (SQLException e) {
             }
-            sql.append("alter table ").append(t.getNome()).append(" add constraint ").append(t.getPk().getNome()).append(" primary key ").append("(").append(t.getPk().getColuna()).append(")");
+            sql.append("alter table ").append(t.getNome()).append(" add constraint ").append(nomePk).append(" primary key ").append("(").append(pk).append(")");
             sql.append(";");
             sql.append("\n");
         }
@@ -212,7 +237,7 @@ public class AlterDAO {
     private String addForeignKeyScript(ForeignKey fk, String tabela) throws SQLException {
         StringBuilder sql = new StringBuilder();
         try {
-            dropConstraint(tabela, fk.getNome());
+            dropConstraintScript(tabela, fk.getNome());
         } catch (SQLException ex) {
         }
         sql.append("alter table ").append(tabela).append(" add constraint ").append(fk.getNome()).append(" foreign key ").append("(").append(fk.getNomeColuna()).append(")").append(" references ").append(fk.getTabelaReferencia()).append(" (").append(fk.getColunaReferencia()).append(")").append("match simple on update ").append(fk.getUpdateRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : fk.getUpdateRule().toString()).append(" on delete ").append(fk.getDeleteRule().toString().equalsIgnoreCase("NOACTION") ? "no action" : fk.getDeleteRule().toString());

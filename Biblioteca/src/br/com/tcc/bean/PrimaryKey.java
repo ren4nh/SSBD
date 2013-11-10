@@ -1,5 +1,7 @@
 package br.com.tcc.bean;
 
+import java.util.Objects;
+
 /**
  *
  * @author renan
@@ -26,5 +28,26 @@ public class PrimaryKey {
 
     public void setColuna(String coluna) {
         this.coluna = coluna;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PrimaryKey other = (PrimaryKey) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -38,7 +38,7 @@ public class AlterDAO {
                             dropColumn(tabela.getNome(), coluna.getNome());
                         } catch (SQLException e) {
                         }
-                        if (coluna.getCasas().equalsIgnoreCase("0")) {
+                        if (!coluna.getCasas().equalsIgnoreCase("0")) {
                             casas = "," + coluna.getCasas();
                         }
                         if (!coluna.getTamanho().equalsIgnoreCase("0")) {
@@ -51,7 +51,7 @@ public class AlterDAO {
                             sql.append(" add ").append(coluna.getNome()).append(" ").append(coluna.getTipo()).append(tamanho).append(coluna.getNulo().equalsIgnoreCase("NO") ? " not null" : "").append(" ");
                         }
                     } else {
-                        if (coluna.getCasas().equalsIgnoreCase("0")) {
+                        if (!coluna.getCasas().equalsIgnoreCase("0")) {
                             casas = "," + coluna.getCasas();
                         }
                         if (!coluna.getTamanho().equalsIgnoreCase("0")) {
@@ -81,7 +81,9 @@ public class AlterDAO {
                 nomePk = primaryKey.getNome();
                 i++;
             }
-            addPrimaryKey(tabela, nomePk, pk);
+            if (!tabela.getPk().isEmpty()) {
+                addPrimaryKey(tabela, nomePk, pk);
+            }
             for (ForeignKey foreignKey : tabela.getListaFk()) {
                 addForeignKey(foreignKey, tabela.getNome());
             }
@@ -136,11 +138,10 @@ public class AlterDAO {
                     if (!column.isEmpty()) {
                         s.append(column).append("\n");
                     }
-
-                    sql.append(";");
-                    sql.append("\n");
-                    s.append(sql.toString());
                 }
+                sql.append(";");
+                sql.append("\n");
+                s.append(sql.toString());
             }
             String pk = "";
             String nomePk = "";
@@ -154,7 +155,9 @@ public class AlterDAO {
                 nomePk = primaryKey.getNome();
                 i++;
             }
-            s.append(addPrimaryKeyScript(tabela, nomePk, pk));
+            if (!tabela.getPk().isEmpty()) {
+                s.append(addPrimaryKeyScript(tabela, nomePk, pk));
+            }
             for (ForeignKey foreignKey : tabela.getListaFk()) {
                 s.append(addForeignKeyScript(foreignKey, tabela.getNome()));
             }

@@ -1,5 +1,7 @@
 package br.com.tcc.bean;
 
+import java.util.Map;
+
 /**
  *
  * @author renan
@@ -7,7 +9,7 @@ package br.com.tcc.bean;
 public class Auxiliar {
 
     private Tabela tabela;
-    private String resultado;
+    private Map<String, String> resultado;
     private String acao;
 
     public Auxiliar() {
@@ -21,11 +23,11 @@ public class Auxiliar {
         this.tabela = tabela;
     }
 
-    public String getResultado() {
+    public Map<String, String> getResultado() {
         return resultado;
     }
 
-    public void setResultado(String resultado) {
+    public void setResultado(Map<String, String> resultado) {
         this.resultado = resultado;
     }
 

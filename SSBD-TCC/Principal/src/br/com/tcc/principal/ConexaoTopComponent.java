@@ -196,6 +196,11 @@ public final class ConexaoTopComponent extends TopComponent {
             String senha = txtSenha.getText();
             Conexao c = new Conexao();
             c.setNome(txtNome.getText());
+            c.setBase(base);
+            c.setPorta(porta);
+            c.setSenha(senha);
+            c.setServidor(sv);
+            c.setUser(user);
             c.setConexao(DBConection.getPostgres(sv, porta, base, user, senha));
             if (c.getConexao() != null) {
                 JOptionPane.showMessageDialog(this, "Conectado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

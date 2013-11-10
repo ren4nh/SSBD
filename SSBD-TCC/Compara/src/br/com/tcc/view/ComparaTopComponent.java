@@ -301,6 +301,10 @@ public final class ComparaTopComponent extends TopComponent {
             JOptionPane.showMessageDialog(this, "Deve ser selecionada a base atual", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
+        if (cmbBaseAtual.getSelectedItem().equals(cmbBaseAntiga.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Devem ser selecionadas bases de dados diferentes", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
         return true;
 
     }

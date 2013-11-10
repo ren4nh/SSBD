@@ -21,6 +21,7 @@
                 <attr name="originalFile" stringvalue="Actions/Edit/br-com-tcc-principal-Sincronizar.instance"/>
                 <attr name="position" intvalue="900"/>
             </file>
+            <file name="br-com-tcc-service-Backup-separatorBefore.instance_hidden"/>
             <file name="br-com-tcc-service-Comparar.shadow">
                 <attr name="originalFile" stringvalue="Actions/Edit/br-com-tcc-service-Comparar.instance"/>
                 <attr name="position" intvalue="700"/>

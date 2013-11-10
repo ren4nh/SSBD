@@ -28,7 +28,7 @@ public class ColunaChildren extends Index.ArrayChildren {
             boolean fk = false;
             for (PrimaryKey foreignKey : tabela.getPk()) {
                 if (foreignKey.getColuna().equalsIgnoreCase(coluna.getNome())) {
-                    fk = true;
+                    pk = true;
                 }
             }
             for (ForeignKey foreignKey : tabela.getListaFk()) {

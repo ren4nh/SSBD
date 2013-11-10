@@ -58,6 +58,7 @@ public final class GeraScript implements ActionListener {
                     c.close();
                 } else {
                     erro = true;
+                    c.close();
                 }
             } catch (IOException ex) {
                 Exceptions.printStackTrace(ex);

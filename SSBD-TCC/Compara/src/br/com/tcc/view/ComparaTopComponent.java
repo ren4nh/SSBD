@@ -13,6 +13,7 @@ import br.com.tcc.principal.AbaConexaoTopComponent;
 import br.com.tcc.xml.LerXml;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -71,17 +72,16 @@ public final class ComparaTopComponent extends TopComponent {
         cmbBaseAntiga = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         cmbBaseAtual = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtArea = new javax.swing.JTextPane();
         btComparar = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDiferente = new javax.swing.JEditorPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtIguais = new javax.swing.JEditorPane();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jLabel1.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jLabel2.text")); // NOI18N
-
-        txtArea.setEditable(false);
-        txtArea.setContentType("text/html"); // NOI18N
-        jScrollPane1.setViewportView(txtArea);
 
         org.openide.awt.Mnemonics.setLocalizedText(btComparar, org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.btComparar.text")); // NOI18N
         btComparar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +89,20 @@ public final class ComparaTopComponent extends TopComponent {
                 btCompararActionPerformed(evt);
             }
         });
+
+        txtDiferente.setEditable(false);
+        txtDiferente.setContentType("text/html"); // NOI18N
+        jScrollPane3.setViewportView(txtDiferente);
+        txtDiferente.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.txtDiferente.AccessibleContext.accessibleDescription")); // NOI18N
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jScrollPane3.TabConstraints.tabTitle"), jScrollPane3); // NOI18N
+
+        txtIguais.setEditable(false);
+        txtIguais.setContentType("text/html"); // NOI18N
+        jScrollPane4.setViewportView(txtIguais);
+        txtIguais.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.txtIguais.AccessibleContext.accessibleDescription")); // NOI18N
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ComparaTopComponent.class, "ComparaTopComponent.jScrollPane4.TabConstraints.tabTitle"), jScrollPane4); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -104,7 +118,7 @@ public final class ComparaTopComponent extends TopComponent {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmbBaseAntiga, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -126,8 +140,7 @@ public final class ComparaTopComponent extends TopComponent {
                     .addComponent(cmbBaseAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btComparar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                .addGap(45, 45, 45))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -137,9 +150,10 @@ public final class ComparaTopComponent extends TopComponent {
             Conexao conexaoAntiga = (Conexao) cmbBaseAntiga.getSelectedItem();
             Conexao conexaoAtual = (Conexao) cmbBaseAtual.getSelectedItem();
 //            ComparaColuna comparaColuna = new ComparaColuna(conexaoAntiga, conexaoAtual);
-            String resultado = comparaTabela.compara(conexaoAntiga, conexaoAtual);
+            Map<String,String> resultado = comparaTabela.compara(conexaoAntiga, conexaoAtual);
 //            resultado += comparaColuna.comparaNome(conexaoAntiga, conexaoAtual);
-            txtArea.setText(resultado);
+            txtDiferente.setText(resultado.get("dif"));
+            txtIguais.setText(resultado.get("igual"));
         }
     }//GEN-LAST:event_btCompararActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -148,8 +162,11 @@ public final class ComparaTopComponent extends TopComponent {
     private javax.swing.JComboBox cmbBaseAtual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane txtArea;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JEditorPane txtDiferente;
+    private javax.swing.JEditorPane txtIguais;
     // End of variables declaration//GEN-END:variables
 
     @Override

@@ -11,11 +11,9 @@ import org.openide.util.lookup.Lookups;
  */
 public class ColunaNode extends AbstractNode {
 
-    private Coluna coluna;
 
     public ColunaNode(Coluna key, boolean pk, boolean fk) {
         super(Children.LEAF, Lookups.fixed(new Object[]{key}));
-        this.coluna = key;
         setDisplayName(key.getNome());
         if (fk) {
             setIconBaseWithExtension("br/com/tcc/principal/image/fkey.gif");

@@ -6,7 +6,9 @@ import br.com.tcc.bean.ForeignKey;
 import br.com.tcc.bean.PrimaryKey;
 import br.com.tcc.bean.Tabela;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.util.List;
 public class ComparaConstraints {
 
     private boolean iguais = false;
+    Map<String, String> mapa = new HashMap<String, String>();
 
 //    public Auxiliar comparaPk(Tabela tabelaAtual, Tabela tabelaAntiga) {
 //        if (!tabelaAntiga.getPk().isEmpty() && !tabelaAtual.getPk().isEmpty()) {
@@ -64,9 +67,11 @@ public class ComparaConstraints {
         aux.setTabela(tabelaAntiga);
         aux.getTabela().setPk(lista);
         if (!lista.isEmpty()) {
-            aux.setResultado("<font color=GREEN>Primary Keys diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            mapa.put("dif", "<font color=GREEN>Primary Keys diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            aux.setResultado(mapa);
         } else {
-            aux.setResultado("<font color=BLACK>Primary Keys Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            mapa.put("igual", "<font color=BLACK>Primary Keys Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            aux.setResultado(mapa);
         }
         return aux;
     }
@@ -93,9 +98,11 @@ public class ComparaConstraints {
         aux.setTabela(tabelaAntiga);
         aux.getTabela().setListaFk(lista);
         if (!lista.isEmpty()) {
-            aux.setResultado("<font color=GREEN>Foreign Keys diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            mapa.put("dif", "<font color=GREEN>Foreign Keys diferentes nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            aux.setResultado(mapa);
         } else {
-            aux.setResultado("<font color=BLACK>Foreign Keys Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            mapa.put("igual", "<font color=BLACK>Foreign Keys Keys iguais nas tabelas " + tabelaAtual.getNome() + " e " + tabelaAntiga.getNome() + "</font><br />");
+            aux.setResultado(mapa);
         }
         return aux;
     }

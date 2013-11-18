@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -112,18 +113,52 @@ public final class RestoreTopComponent extends TopComponent {
     private void btRestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRestoreActionPerformed
         if (cmbBase.getSelectedItem() != null) {
             Conexao c = (Conexao) cmbBase.getSelectedItem();
-            JFileChooser j = new JFileChooser();
-//            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+             JFileChooser j = new JFileChooser();
+//                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            j.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    String fileName = f.getName();
+                    return f.isDirectory() || fileName.toLowerCase().endsWith(".exe");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "*.exe";
+                }
+            });
+            j.setDialogTitle("Selecione o arquivo pg_restore");
             int resp = j.showOpenDialog(j);
             if (resp != JFileChooser.APPROVE_OPTION) {
                 return;
             }
             File salvo = j.getSelectedFile();
-//            if (!salvo.getAbsolutePath().endsWith(".backup")) {
-//                salvo = new File(salvo.getAbsolutePath() + ".backup");
-//            }
+            if (!salvo.getName().equalsIgnoreCase("pg_restore.exe")) {
+                JOptionPane.showMessageDialog(null, "Deverá ser selecionado o arquivo pg_restore");
+                return;
+            }
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileFilter(new FileFilter() {
+
+                @Override
+                public boolean accept(File f) {
+                    String fileName = f.getName();
+                    return f.isDirectory() || fileName.toLowerCase().endsWith(".backup");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "*.backup";
+                }
+            });
+            jfc.setDialogTitle("Selecione o arquivo de backup");
+            resp = jfc.showSaveDialog(jfc);
+            if (resp != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File arquivo = jfc.getSelectedFile();
             final List<String> comandos = new ArrayList<String>();
-            comandos.add("C:\\Program Files\\PostgreSQL\\9.1\\bin\\pg_restore.exe"); //testado no windows xp       
+            comandos.add(salvo.getAbsolutePath()); //testado no windows xp       
             comandos.add("-i");
             comandos.add("-h");
             comandos.add(c.getServidor());    //ou   comandos.add("192.168.0.1");   
@@ -134,7 +169,7 @@ public final class RestoreTopComponent extends TopComponent {
             comandos.add("-d");
             comandos.add(c.getBase());
             comandos.add("-v");
-            comandos.add(salvo.getAbsolutePath());   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.    
+            comandos.add(arquivo.getAbsolutePath());   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.    
             ProcessBuilder pb = new ProcessBuilder(comandos);
             pb.environment().put("PGPASSWORD", c.getSenha());     //Somente coloque sua senha           
             try {
@@ -152,7 +187,7 @@ public final class RestoreTopComponent extends TopComponent {
                 process.waitFor();
                 process.destroy();
                 JOptionPane.showMessageDialog(null, "Restaurado com sucesso !");
-
+                this.close();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException ie) {

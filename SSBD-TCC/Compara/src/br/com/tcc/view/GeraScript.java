@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -41,8 +42,22 @@ public final class GeraScript implements ActionListener {
         if (c != null) {
             try {
                 JFileChooser j = new JFileChooser();
-                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int resp = j.showOpenDialog(j);
+//                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                j.setFileFilter(new FileFilter() {
+                    @Override
+                    public boolean accept(File f) {
+                        String fileName = f.getName();
+                        return f.isDirectory() || fileName.toLowerCase().endsWith(".sql");
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "*.sql";
+                    }
+                });
+                j.setDialogTitle("Selecione o local para salvar");
+                j.setSelectedFile(new File("script.sql"));
+                int resp = j.showSaveDialog(j);
                 if (resp != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -53,7 +68,7 @@ public final class GeraScript implements ActionListener {
                 String script = c.geraScript();
                 if (!script.trim().isEmpty()) {
                     pw = new PrintWriter(new FileWriter(salvo), true);
-                    pw.println(script);
+                    pw.println(script.replaceAll("  ", " "));
                     pw.close();
                     c.close();
                 } else {

@@ -16,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileFilter;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -114,55 +115,94 @@ public final class BackupTopComponent extends TopComponent {
 
     private void btBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackupActionPerformed
         if (cmbBase.getSelectedItem() != null) {
-                Conexao c = (Conexao) cmbBase.getSelectedItem();
-                JFileChooser j = new JFileChooser();
-                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int resp = j.showOpenDialog(j);
-                if (resp != JFileChooser.APPROVE_OPTION) {
-                    return;
+            Conexao c = (Conexao) cmbBase.getSelectedItem();
+            JFileChooser j = new JFileChooser();
+//                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            j.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    String fileName = f.getName();
+                    return f.isDirectory() || fileName.toLowerCase().endsWith(".exe");
                 }
-                File salvo = j.getSelectedFile();
-                if (!salvo.getAbsolutePath().endsWith(".backup")) {
-                    salvo = new File(salvo.getAbsolutePath() + ".backup");
+
+                @Override
+                public String getDescription() {
+                    return "*.exe";
                 }
-                final List<String> comandos = new ArrayList<String>();
-                comandos.add("C:\\Program Files\\PostgreSQL\\9.1\\bin\\pg_dump.exe");    // esse é meu caminho    
-                comandos.add("-i");
-                comandos.add("-h");
-                comandos.add(c.getServidor());     //ou  comandos.add("192.168.0.1");   
-                comandos.add("-p");
-                comandos.add(c.getPorta());
-                comandos.add("-U");
-                comandos.add(c.getUser());
-                comandos.add("-F");
-                comandos.add("c");
-                comandos.add("-b");
-                comandos.add("-v");
-                comandos.add("-f");
-                comandos.add(salvo.getAbsolutePath());   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.    
-                comandos.add(c.getBase());
-                ProcessBuilder pb = new ProcessBuilder(comandos);
-                pb.environment().put("PGPASSWORD", c.getSenha());      //Somente coloque sua senha           
-                try {
-                    final Process process = pb.start();
-                    String resultado = "";
-                    final BufferedReader r = new BufferedReader(
-                            new InputStreamReader(process.getErrorStream()));
-                    String line = r.readLine();
-                    while (line != null) {
-                        System.err.println(line);
-                        txtArea.append(line + "\n");
-                        line = r.readLine();
-                    }
-                    r.close();
-                    process.waitFor();
-                    process.destroy();
-                    JOptionPane.showMessageDialog(null, "Backup realizado com sucesso.");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (InterruptedException ie) {
-                    ie.printStackTrace();
+            });
+            j.setDialogTitle("Selecione o arquivo pg_dump");
+            int resp = j.showOpenDialog(j);
+            if (resp != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File salvo = j.getSelectedFile();
+            if (!salvo.getName().equalsIgnoreCase("pg_dump.exe")) {
+                JOptionPane.showMessageDialog(null, "Deverá ser selecionado o arquivo pg_dump");
+                return;
+            }
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileFilter(new FileFilter() {
+
+                @Override
+                public boolean accept(File f) {
+                    String fileName = f.getName();
+                    return f.isDirectory() || fileName.toLowerCase().endsWith(".backup");
                 }
+
+                @Override
+                public String getDescription() {
+                    return "*.backup";
+                }
+            });
+            jfc.setSelectedFile(new File("backup.backup"));
+            jfc.setDialogTitle("Selecione o local para salvar");
+            resp = jfc.showSaveDialog(jfc);
+            if (resp != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File arquivo = jfc.getSelectedFile();
+            if (!arquivo.getAbsolutePath().endsWith(".backup")) {
+                arquivo = new File(arquivo.getAbsolutePath() + ".backup");
+            }
+            final List<String> comandos = new ArrayList<String>();
+            comandos.add(salvo.getAbsolutePath());    // esse é meu caminho    
+            comandos.add("-i");
+            comandos.add("-h");
+            comandos.add(c.getServidor());     //ou  comandos.add("192.168.0.1");   
+            comandos.add("-p");
+            comandos.add(c.getPorta());
+            comandos.add("-U");
+            comandos.add(c.getUser());
+            comandos.add("-F");
+            comandos.add("c");
+            comandos.add("-b");
+            comandos.add("-v");
+            comandos.add("-f");
+            comandos.add(arquivo.getAbsolutePath());   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.    
+            comandos.add(c.getBase());
+            ProcessBuilder pb = new ProcessBuilder(comandos);
+            pb.environment().put("PGPASSWORD", c.getSenha());      //Somente coloque sua senha           
+            try {
+                final Process process = pb.start();
+                String resultado = "";
+                final BufferedReader r = new BufferedReader(
+                        new InputStreamReader(process.getErrorStream()));
+                String line = r.readLine();
+                while (line != null) {
+                    System.err.println(line);
+                    txtArea.append(line + "\n");
+                    line = r.readLine();
+                }
+                r.close();
+                process.waitFor();
+                process.destroy();
+                JOptionPane.showMessageDialog(null, "Backup realizado com sucesso.");
+                this.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btBackupActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

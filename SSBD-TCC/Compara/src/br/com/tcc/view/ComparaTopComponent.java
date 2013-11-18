@@ -41,7 +41,7 @@ import org.openide.util.NbBundle.Messages;
         preferredID = "ComparaTopComponent")
 @Messages({
     "CTL_ComparaAction=Compara",
-    "CTL_ComparaTopComponent=Compara Window",
+    "CTL_ComparaTopComponent=Tela de Comparação",
     "HINT_ComparaTopComponent=This is a Compara window"
 })
 public final class ComparaTopComponent extends TopComponent {

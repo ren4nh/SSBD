@@ -12,7 +12,7 @@
       <colunas>
         <coluna>
           <nome>descricao</nome>
-          <acao>addColumn</acao>
+          <acao>dropColumn</acao>
           <tipo>varchar</tipo>
           <tamanho>2147483647</tamanho>
           <nulo>YES</nulo>
